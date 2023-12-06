@@ -296,8 +296,11 @@ $(document).ready(function() {
         CKEDITOR.replace(item);
     });
 
-    let stars = new StarRating('.rating', {
-        clearable: true,
-        tooltip: false
-    });
+
+    if (document.querySelector('.rating')) {
+        let stars = new StarRating('.rating', {
+            clearable: true,
+            tooltip: false
+        });
+    }
 });

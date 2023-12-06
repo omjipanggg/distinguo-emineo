@@ -40,12 +40,13 @@ class TokenController extends Controller
     public function store(Request $request)
     {
         $token = Tokeniser::create([
-            'token' => $request->input('token')
+            'token' => $request->input('token'),
+	    'region' => $request->input('region'),
+	    'zone' => $request->input('zone')
         ]);
 
         $token->departments()->syncWithPivotValues($request->input('departments'), [
-            'region' => $request->input('region'),
-            'zone' => $request->input('zone')
+	    'assessment_id' => 1
         ]);
 
         alert()->success('Sukses', 'Token baru berhasil dibuat.');

@@ -65,7 +65,7 @@ class ServerController extends Controller
     }
 
     public function fetchCriterias(Request $request) {
-        $data = Criteria::orderBy('name')->with(['type'])->get();
+        $data = Criteria::orderBy('name')->where('id', '<>', 999)->with(['type'])->get();
         return DataTables::of($data)->make(true);
     }
 
@@ -111,7 +111,7 @@ class ServerController extends Controller
 
         $batches = Evaluation::select('batch')->whereHas('evaluator', function($query) use($token) {
             return $query->where('token', $token);
-        })->groupBy('batch')->pluck('batch');
+        })->groupBy('batch')->pluck('batch') ?? [];
 
         $data = Evaluation::whereHas('evaluator', function($query) use($token) {
             return $query->where('token', $token);

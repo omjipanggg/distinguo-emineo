@@ -42,7 +42,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
 
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css">
-
+    
+    <link rel="stylesheet" href="{{ asset('css/star.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/media.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animation.css') }}">
@@ -124,6 +125,7 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js"></script>
 
     <script src="{{ asset('js/functions.js') }}"></script>
+    <script src="{{ asset('js/star.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/modal.js') }}"></script>
     <script src="{{ asset('js/chart.js') }}"></script>

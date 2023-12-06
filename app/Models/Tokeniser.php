@@ -15,7 +15,9 @@ class Tokeniser extends Model
     protected $table = 'tokenisers';
     protected $guarded = [];
 
-    protected $casts = [];
+    protected $casts = [
+        'is_used' => 'boolean'
+    ];
 
     public function departments() {
         return $this->belongsToMany(Department::class, 'pivot_departments_tokenisers')

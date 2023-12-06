@@ -38,7 +38,17 @@ class EvaluationController extends Controller
 
     public function score(Request $request)
     {
-        $token = $request->input('token') ?? null;
+	$token = null;
+	if ($request->filled('token')) {
+            $token = $request->input('token');
+
+	    $exists = Tokeniser::where('token', $token)->exists();
+
+ 	    if (!$exists) {
+                alert()->error('Kesalahan', 'Token tidak ditemukan.');
+	        return redirect()->route('evaluation.index')->with(['code' => 404, 'message' => 'Token tidak ditemukan.', 'variant' => 'danger', 'icon' => 'x-circle']);
+	    }
+	}
 
         $evaluator = Evaluator::whereHas('tokeniser', function($query) use($token) {
             return $query->where('token', $token);

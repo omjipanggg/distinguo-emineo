@@ -17,6 +17,7 @@ return new class extends Migration
             $table->char('evaluatee_id', 36)->index();
             $table->unsignedBigInteger('criteria_id')->index();
             $table->string('remarks')->nullable()->index();
+	    $table->string('batch')->nullable()->index();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->softDeletes();
