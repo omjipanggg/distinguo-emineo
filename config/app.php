@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://sabrina.astaga.web.id'),
 
     'asset_url' => env('ASSET_URL'),
 
@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'UTC'),
+    'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------
@@ -122,7 +122,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY','khzyzlolaut5igkzvvfqy7eg8cacskl9'),
 
     'cipher' => 'AES-256-CBC',
 
@@ -159,10 +159,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Biscolab\ReCaptcha\ReCaptchaServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
-        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
-        Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -187,9 +183,6 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
     ])->toArray(),
 
 ];
