@@ -36,9 +36,9 @@ return [
 
         'database' => [
             'driver' => 'database',
-            'table' => 'upcoming_jobs',
+            'table' => 'jobs',
             'queue' => 'default',
-            'retry_after' => 9000,
+            'retry_after' => 90,
             'after_commit' => false,
         ],
 
