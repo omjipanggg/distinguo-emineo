@@ -15,5 +15,15 @@ class Evaluatee extends Model
     protected $table = 'evaluatees';
     protected $guarded = [];
 
-    protected $casts = [];
+    protected $casts = [
+    	'id' => 'string'
+    ];
+
+    public function departments() {
+    	return $this->belongsToMany(Department::class, 'pivot_departments_evaluatees')->orderBy('departments.name');
+    }
+
+    public function evaluations() {
+    	return $this->hasMany(Evaluation::class);
+    }
 }

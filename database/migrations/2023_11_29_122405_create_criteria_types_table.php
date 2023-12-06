@@ -18,6 +18,11 @@ return new class extends Migration
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->softDeletes();
         });
+
+        \DB::table('criteria_types')->insert([
+            ['name' => 'Scale'],
+            ['name' => 'Textual'],
+        ]);
     }
 
     /**

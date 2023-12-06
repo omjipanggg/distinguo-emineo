@@ -30,6 +30,7 @@ return new class extends Migration
         \DB::table('users')->insert([
             'id' => '00000000-0000-0000-0000-000000000000',
             'name' => 'Admin',
+            'snake_name' => 'admin',
             'email' => 'omjipanggg@gmail.com',
             'email_verified_at' => Carbon::today(),
             'password' => Hash::make('nimda123')

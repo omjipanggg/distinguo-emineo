@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tokeniser;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,11 +23,12 @@ class HomeController extends Controller
     }
 
     public function vanish() {
-        Alert::warning('Perhatian', 'Please try again later.');
+        Alert::warning('Perhatian', 'Silakan coba kembali.');
         return redirect()->back()->with([
         	'code' => 401,
-        	'message' => 'Please try again later.',
-        	'variant' => 'success'
+        	'message' => 'Silakan coba kembali.',
+        	'variant' => 'info',
+            'icon' => 'info-circle'
         ]);
     }
 
@@ -35,7 +38,8 @@ class HomeController extends Controller
 	    	return redirect()->route('home.index')->with([
 	    		'code' => 403,
 	    		'message' => 'Table is not found',
-	    		'variant' => 'success'
+	    		'variant' => 'question',
+                'icon' => 'question-circle'
 	    	]);
     	}
 
@@ -44,12 +48,12 @@ class HomeController extends Controller
 	   	alert()->success('Sukses', 'Table ('. $table .') has been sanitized.');
     	return redirect()->route('home.index')->with([
     		'code' => 200,
-    		'message' => 'Table has been sanitized.',
-    		'variant' => 'success'
+    		'message' => 'Table ('. $table .') has been sanitized.'
     	]);
     }
 
-    public function settings() {
+    public function settings()
+    {
         return view('pages.home.settings');
     }
 }

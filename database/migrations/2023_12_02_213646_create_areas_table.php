@@ -11,14 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pivot_evaluatees_departments', function (Blueprint $table) {
+        Schema::create('areas', function (Blueprint $table) {
             $table->id();
-            $table->char('evaluatee_id', 36)->index();
-            $table->unsignedBigInteger('department_id')->index();
+            $table->string('name')->index();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->softDeletes();
         });
+
+        \DB::table('areas')->insert([
+            ['name' => 'Area I'],
+            ['name' => 'Area II'],
+            ['name' => 'Area III'],
+            ['name' => 'Area IV']
+        ]);
     }
 
     /**
@@ -26,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pivot_evaluatees_departments');
+        Schema::dropIfExists('areas');
     }
 };

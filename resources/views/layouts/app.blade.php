@@ -123,7 +123,9 @@
 
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js"></script>
 
+    <script src="{{ asset('js/functions.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/modal.js') }}"></script>
     <script src="{{ asset('js/chart.js') }}"></script>
 </body>
 </html>

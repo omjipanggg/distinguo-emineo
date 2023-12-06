@@ -14,11 +14,20 @@ return new class extends Migration
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('snake_name')->nullable();
             $table->text('description')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->softDeletes();
         });
+
+        \DB::table('departments')->insert([
+            ['name' => 'Visitor', 'snake_name' => 'visitor'],
+            ['name' => 'Teknisi', 'snake_name' => 'teknisi'],
+            ['name' => 'Telecollection', 'snake_name' => 'telecollection'],
+            ['name' => 'Admin', 'snake_name' => 'admin'],
+            ['name' => 'Sekretaris', 'snake_name' => 'sekretaris']
+        ]);
     }
 
     /**

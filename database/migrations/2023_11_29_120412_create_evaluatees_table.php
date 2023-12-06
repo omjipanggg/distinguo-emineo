@@ -15,7 +15,9 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('card_number')->nullable()->index();
             $table->string('name')->nullable()->index();
-            $table->string('department')->nullable()->index();
+            $table->string('area')->nullable()->index();
+            $table->string('region')->nullable()->index();
+            $table->string('zone')->nullable()->index();
             $table->string('avatar')->default('default.webp')->nullable()->index();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));

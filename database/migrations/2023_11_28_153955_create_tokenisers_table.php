@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('tokenisers', function (Blueprint $table) {
             $table->id();
             $table->string('token')->nullable()->index();
+            $table->string('region')->nullable()->index();
+            $table->string('zone')->nullable()->index();
             $table->boolean('is_used')->default(0)->nullable()->index();
             $table->datetime('used_at')->nullable()->index();
+            $table->datetime('expired_at')->default('2031-12-31 23:59:59')->nullable()->index();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->softDeletes();

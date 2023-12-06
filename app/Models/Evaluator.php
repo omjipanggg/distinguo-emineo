@@ -15,5 +15,15 @@ class Evaluator extends Model
     protected $table = 'evaluators';
     protected $guarded = [];
 
-    protected $casts = [];
+    protected $casts = [
+    	'id' => 'string'
+    ];
+
+    public function evaluations() {
+        return $this->hasMany(Evaluation::class);
+    }
+
+    public function tokeniser() {
+    	return $this->belongsTo(Tokeniser::class, 'token', 'token');
+    }
 }

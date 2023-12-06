@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tokeniser;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // \App\Models\User::factory(10)->create();
+        Tokeniser::factory(7)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
