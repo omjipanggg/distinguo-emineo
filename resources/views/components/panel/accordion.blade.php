@@ -58,7 +58,7 @@
 @else
     <div class="sb-sidenav-menu">
         <div class="nav mb-4">
-            <a class="pt-24 nav-link @if(url()->current() == route('evaluation.index')) active @endif" href="{{ route('evaluation.index') }}">
+            <a class="pt-24 nav-link @if(url()->current() == route('evaluation.index')) active @endif" href="{{ route('evaluation.index') }}" onclick="underMaintenance(event);">
                 <div class="sb-nav-link-icon pe-2"><i class="bi bi-house"></i></div>
                 Dashboard
             </a>
