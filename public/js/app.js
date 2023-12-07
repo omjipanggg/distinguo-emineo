@@ -155,7 +155,7 @@ $(document).ready(function() {
                             },
                             success: (response) => {
                                 if (response.code == 200) {
-                                    window.location.href = '/evaluation?token=' + response.token + '&user=' + response.name + '&timestamp=' + Date.parse(new Date());
+                                    window.location.href = '/evaluation/score?token=' + response.token + '&user=' + response.name + '&timestamp=' + Date.parse(new Date());
                                 }
                             }
                         });

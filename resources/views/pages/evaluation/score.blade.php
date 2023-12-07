@@ -30,14 +30,16 @@
                         </div>
 
 
-                        @if ($token)
-                        <div class="grouped-buttons">
-                            <button type="button" onclick="window.location.reload();" class="btn btn-dark px-3 rounded-0"><i class="bi bi-arrow-counterclockwise me-2"></i>Clear</button>
-                            @foreach ($evaluator->tokeniser->departments as $department)
-                             <button type="button" onclick="filterScore(event, '{{ $token }}', {{ $department->id }})" class="btn btn-primary px-3 rounded-0"><i class="bi bi-tag-fill me-2"></i>{{ $department->name }}</button>
-                            @endforeach
-                        </div>
-                        @endif
+                        @guest
+                            @if ($token)
+                            <div class="grouped-buttons">
+                                <button type="button" onclick="window.location.reload();" class="btn btn-dark px-3 rounded-0"><i class="bi bi-arrow-counterclockwise me-2"></i>Clear</button>
+                                @foreach ($evaluator->tokeniser->departments as $department)
+                                 <button type="button" onclick="filterScore(event, '{{ $token }}', {{ $department->id }})" class="btn btn-primary px-3 rounded-0"><i class="bi bi-tag-fill me-2"></i>{{ $department->name }}</button>
+                                @endforeach
+                            </div>
+                            @endif
+                        @endguest
 
                     </div>
 
