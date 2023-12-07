@@ -42,7 +42,7 @@
 					<div class="fw-bold mb-3">{{ $loop->iteration }}. {{ $point->name }}</div>
 					<div class="text-justify">{{ $point->description }}</div>
 
-					@if ($point->criteria_type_id === 1)
+					@if ($point->criteria_type_id == 1)
 
 					<div class="mt-3"></div>
 
@@ -55,7 +55,7 @@
 						<option value="1">Sangat kurang</option>
 					</select>
 
-					@elseif ($point->criteria_type_id === 2)
+					@elseif ($point->criteria_type_id == 2)
 
 					<textarea name="remarks-{{ $point->id }}" id="remarks-{{ $point->id }}" class="form-control" required="" placeholder="Remarks" cols="30" rows="10"></textarea>
 
