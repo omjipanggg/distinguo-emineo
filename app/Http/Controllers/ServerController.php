@@ -168,11 +168,11 @@ class ServerController extends Controller
 
         $data['code'] = 200;
 
-        $data['token'] = Tokeniser::where('token', $token)
-            ->update([
-                'is_used' => true,
-                'used_at' => Carbon::now()
-            ]);
+        Tokeniser::where('token', $token)
+        ->update([
+            'is_used' => true,
+            'used_at' => Carbon::now()
+        ]);
 
         return response()->json($data);
     }
