@@ -3,6 +3,12 @@
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
 
+<IfModule mod_headers.c>
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "Sat, 01 Jan 2000 00:00:00 GMT"
+</IfModule>
+
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the “ea-php74” package as the default “PHP” programming language.
 <IfModule mime_module>
