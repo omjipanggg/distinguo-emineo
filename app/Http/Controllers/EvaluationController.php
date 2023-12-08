@@ -55,7 +55,7 @@ class EvaluationController extends Controller
 
         $departments = Evaluatee::join('pivot_departments_evaluatees', 'pivot_departments_evaluatees.evaluatee_id', '=', 'evaluatees.id')->join('departments', 'departments.id', '=', 'pivot_departments_evaluatees.department_id')->select('departments.id', 'departments.name')->whereIn('project_number', $project_numbers)->whereDoesntHave('evaluations.evaluator', function($query) use($token) {
                 return $query->where('token', $token);
-            })->with(['departments', 'evaluations.evaluator'])->get();
+            })->with(['departments', 'evaluations.evaluator'])->groupBy('departments.id', 'departments.name')->get();
 
         $context = [
             'departments' => $departments,
@@ -73,7 +73,7 @@ class EvaluationController extends Controller
 
         $departments = Evaluatee::join('pivot_departments_evaluatees', 'pivot_departments_evaluatees.evaluatee_id', '=', 'evaluatees.id')->join('departments', 'departments.id', '=', 'pivot_departments_evaluatees.department_id')->select('departments.id', 'departments.name')->whereIn('project_number', $project_numbers)->whereHas('evaluations.evaluator', function($query) use($token) {
                 return $query->where('token', $token);
-            })->with(['departments', 'evaluations.evaluator'])->get();
+            })->with(['departments', 'evaluations.evaluator'])->groupBy('departments.id', 'departments.name')->get();
 
         $context = [
             'departments' => $departments,
@@ -89,10 +89,9 @@ class EvaluationController extends Controller
 
         $evaluatee = Evaluatee::find($request->evaluatee_id);
 
-        $materials = Assessment::with(['criterias.type', 'tokenisers'])
-            ->whereHas('tokenisers', function($query) use($token) {
-                return $query->where('token', $token);
-            })
+        $materials = Assessment::join('pivot_projects_tokenisers', 'pivot_projects_tokenisers.assessment_id', '=', 'assessments.id')->with(['criterias.type'])
+        ->join('tokenisers', 'tokenisers.id', '=', 'pivot_projects_tokenisers.tokeniser_id')
+        ->where('token', $token)
         ->first();
 
         $context = [
@@ -157,22 +156,8 @@ class EvaluationController extends Controller
     {
         $token = $request->token ?? null;
 
-        $evaluatee = Evaluatee::find($request->evaluatee_id);
-
-        $materials = Assessment::with(['criterias.type', 'tokenisers'])
-            ->whereHas('tokenisers', function($query) use($token) {
-                return $query->where('tokenisers.token', $token);
-            })
-        ->first();
-
-        $batch = $request->batch ?? null;
-
-        $evaluation = Evaluation::where('batch', $batch)->with(['criteria.type', 'evaluatee.departments', 'evaluator'])->get();
-
         $context = [
-            'evaluatee' => $evaluatee,
-            'evaluation' => $evaluation,
-            'materials' => $materials
+            'token' => $token
         ];
 
         return view('pages.evaluation.temp', $context);

@@ -18,8 +18,4 @@ class Assessment extends Model
     public function criterias() {
     	return $this->belongsToMany(Criteria::class, 'pivot_assessments_criterias')->orderBy('criterias.criteria_type_id')->orderBy('criterias.name');
     }
-
-    public function tokenisers() {
-    	return $this->belongsToMany(Tokeniser::class, 'pivot_projects_tokenisers');
-    }
 }
