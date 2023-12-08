@@ -261,7 +261,7 @@ $('#tokenTable').DataTable({
 	]
 });
 
-$('#userTable').DataTable({
+$('#memberTable').DataTable({
 	ajax: {
 		url: '/server/fetch/members',
 	},
@@ -289,6 +289,8 @@ $('#userTable').DataTable({
         $('.dataTables_wrapper > .row:last-child').addClass('mt-2');
     },
     order: [
+        [0, 'asc'],
+        [2, 'asc']
     ],
     columns: [
     	{
@@ -428,6 +430,69 @@ $('#criteriaTable').DataTable({
             $(row).addClass('deleted');
         }
         $(row).find('td:eq(2)').attr('title', data.description);
+    }
+});
+
+$('#assessmentTable').DataTable({
+    ajax: {
+        url: '/server/fetch/assessments',
+    },
+    processing: true,
+    serverSide: true,
+    orderCellsTop: true,
+    scrollCollapse: true,
+    scrollY: true,
+    scrollX: true,
+    language: {
+        url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
+        paginate: {
+            previous: '<i class="bi bi-caret-left-fill"></i>',
+            next: '<i class="bi bi-caret-right-fill"></i>'
+        },
+        infoFiltered: '',
+        lengthMenu: '_MENU_',
+        search: '',
+        searchPlaceholder: 'Pencarian',
+        processing: 'Mengambil data...'
+    },
+    initComplete: function(settings, json) {
+        $('.dataTables_filter input').removeClass('form-control-sm');
+        $('.dataTables_length select').removeClass('form-select-sm');
+        $('.dataTables_wrapper > .row:last-child').addClass('mt-2');
+    },
+    order: [
+    ],
+    columns: [
+        {
+            data: 'name',
+            title: 'Nama',
+            render: function(data, type, row, meta) {
+                if (data == null || data == '') {
+                    return '<em>null</em>';
+                }
+                return data;
+            }
+        },
+        {
+            data: 'criterias',
+            title: 'Kriteria',
+            render: function(data, type, row, meta) {
+                if (data == null || data == '') {
+                    return '<em>null</em>';
+                }
+
+                return '<ol class="m-0 ps-4">' + data.map((item) => {
+                    let pad = '';
+                    if (data.length > 1) { pad = 'me-1'; }
+                    return '<li class="text-code">' + item.name + '</li>';
+                }).join('') + '</ol>';
+            }
+        }
+    ],
+    createdRow: function(row, data, index) {
+        if (data.deleted_at) {
+            $(row).addClass('deleted');
+        }
     }
 });
 

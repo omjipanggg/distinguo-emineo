@@ -85,8 +85,11 @@ Route::resource('evaluator', Evaluator::class);
 Route::prefix('server')->group(function() {
 	Route::get('evaluator/store', [Server::class, 'storeEvaluator'])->name('server.storeEvaluator');
 	Route::get('evaluator/update', [Server::class, 'updateEvaluator'])->name('server.updateEvaluator');
+
 	Route::get('token/check', [Server::class, 'checkToken'])->name('server.checkToken');
+
 	Route::get('fetch', [Server::class, 'fetch'])->name('server.fetch');
+	Route::get('fetch/assessments', [Server::class, 'fetchAssessments'])->name('server.fetchAssessments');
 	Route::get('fetch/criterias', [Server::class, 'fetchCriterias'])->name('server.fetchCriterias');
 	Route::get('fetch/evaluations/history', [Server::class, 'fetchEvaluationHistory'])->name('server.fetchEvaluationHistory');
 	Route::get('fetch/members', [Server::class, 'fetchMembers'])->name('server.fetchMembers');

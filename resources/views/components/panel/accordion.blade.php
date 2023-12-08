@@ -31,10 +31,10 @@
             <div class="collapse" id="userMenu" aria-labelledby="userMenu" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
                     <a class="{{ (url()->current() == route('token.index')) ? 'active' : '' }} nav-link" href="{{ route('token.index') }}">
-                        Penilai (Token)
+                        Penilai
                     </a>
                     <a class="{{ (url()->current() == route('member.index')) ? 'active' : '' }} nav-link" href="{{ route('member.index') }}">
-                        Yang dinilai
+                        Peserta
                     </a>
                     {{--
                     <a class="nav-link @if(url()->current() == route('user.index')) active @endif" href="{{ route('user.index') }}">

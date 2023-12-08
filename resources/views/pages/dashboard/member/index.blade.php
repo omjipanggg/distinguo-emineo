@@ -1,18 +1,18 @@
 @extends('layouts.panel')
-@section('title', 'User')
+@section('title', 'Peserta')
 
 @section('content')
 <div class="container-fluid px-12">
     <div class="row">
         <div class="col">
-            {{ Breadcrumbs::render('user.index') }}
+            {{ Breadcrumbs::render('member.index') }}
         </div>
     </div>
 
     <div class="row g-4">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">{{ __('User') }}</div>
+                <div class="card-header">Peserta</div>
 
                 <div class="card-body">
 
@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover table-striped display nowrap" id="userTable"></table>
+                        <table class="table table-bordered table-hover table-striped display nowrap" id="memberTable"></table>
                     </div>
 
                 </div>

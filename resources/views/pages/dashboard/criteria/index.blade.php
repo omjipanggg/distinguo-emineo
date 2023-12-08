@@ -1,5 +1,5 @@
 @extends('layouts.panel')
-@section('title', 'Criteria')
+@section('title', 'Kriteria')
 
 @section('content')
 <div class="container-fluid px-12">
@@ -12,7 +12,7 @@
     <div class="row g-4">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">Criteria</div>
+                <div class="card-header">Kriteria</div>
 
                 <div class="card-body">
 

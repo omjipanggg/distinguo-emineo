@@ -53,7 +53,9 @@ class TokenController extends Controller
     {
         $token = Tokeniser::create(['token' => $request->input('token')]);
 
-        $token->projects()->syncWithPivotValues($request->input('projects'), ['assessment_id' => 1]);
+        $token->projects()->syncWithPivotValues($request->input('projects'), [
+            'assessment_id' => $request->assessment_id
+        ]);
 
         $evaluator = Evaluator::create([
             'name' => $request->input('name'),

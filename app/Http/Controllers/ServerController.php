@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assessment;
 use App\Models\Criteria;
 use App\Models\Evaluatee;
 use App\Models\Evaluation;
@@ -126,6 +127,11 @@ class ServerController extends Controller
     public function fetchTokens(Request $request) {
     	$data = Tokeniser::with(['evaluator', 'projects'])->latest()->get();
     	return DataTables::of($data)->make(true);
+    }
+
+    public function fetchAssessments(Request $request) {
+        $data = Assessment::orderBy('name')->with(['criterias'])->get();
+        return DataTables::of($data)->make(true);
     }
 
     public function fetchUsers(Request $request) {

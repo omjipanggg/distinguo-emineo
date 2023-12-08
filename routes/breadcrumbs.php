@@ -34,25 +34,31 @@ Breadcrumbs::for('dashboard.index', function (BreadcrumbTrail $trail) {
 // Home > Tokeniser
 Breadcrumbs::for('token.index', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard.index');
-    $trail->push('Token', route('token.index'));
+    $trail->push('Penilai', route('token.index'));
 });
 
 // Dashboard > Assessment
 Breadcrumbs::for('assessment.index', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard.index');
-    $trail->push('Assessment', route('assessment.index'));
+    $trail->push('Asesmen', route('assessment.index'));
 });
 
 // Dashboard > Criteria
 Breadcrumbs::for('criteria.index', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard.index');
-    $trail->push('Criteria', route('criteria.index'));
+    $trail->push('Kriteria', route('criteria.index'));
 });
 
 // Home > User
 Breadcrumbs::for('user.index', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard.index');
-    $trail->push('User', route('user.index'));
+    $trail->push('Pengguna', route('user.index'));
+});
+
+// Home > Out Source
+Breadcrumbs::for('member.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard.index');
+    $trail->push('Peserta', route('member.index'));
 });
 
 // Dashboard > History

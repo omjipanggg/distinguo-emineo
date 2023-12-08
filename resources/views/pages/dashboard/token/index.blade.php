@@ -1,5 +1,5 @@
 @extends('layouts.panel')
-@section('title', 'Token')
+@section('title', 'Penilai')
 
 @section('content')
 <div class="container-fluid px-12">
@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center">
-                        <span>{{ __('Token') }}</span>
+                        <span>Penilai</span>
 
                         <a href="{{ route('token.create') }}" class="btn btn-primary px-3 rounded-1" data-bs-toggle="modal" data-bs-target="#modalControl" data-bs-table="Token" data-bs-type="Generate">
                             Tambah
