@@ -32,7 +32,7 @@ class AssessmentController extends Controller
      */
     public function create()
     {
-        $criterias = Criteria::orderBy('name')->get();
+        $criterias = Criteria::orderBy('name')->where('id', '<>', 999)->with(['type'])->get();
         $context = [
             'criterias' => $criterias
         ];

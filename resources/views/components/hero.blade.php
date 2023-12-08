@@ -1,8 +1,8 @@
 <div class="hero">
     <img class="d-block mx-auto mb-4 img-fluid img-hero" src="{{ asset('img/score.webp') }}" alt="Logo">
-    <h1 class="display-5 fw-bold text-body-emphasis text-center">{{ config('app.name') }}™</h1>
+    <abbr title="Scoring and analytical board, of ratings, insights and notation achievements."><h1 class="display-5 fw-bold text-body-emphasis text-center">{{ config('app.name') }}™</h1></abbr>
     <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4 text-center">SABRINA is a comprehensive system designed to facilitate the evaluation and analysis of individual or team performance. It incorporates a scoring mechanism that assesses various criteria, providing insights into achievements and areas for improvement.</p>
+      <p class="lead mb-4 text-center">{{ config('app.name') }}™ is a comprehensive system designed to facilitate the evaluation and analysis of individual or team performance. It incorporates a scoring mechanism that assesses various criteria, providing insights into achievements and areas for improvement.</p>
       {{--
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
         <button type="button" class="btn btn-primary btn-lg rounded-1 px-4" onclick="underMaintenance(event);">

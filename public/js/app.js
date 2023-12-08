@@ -120,13 +120,24 @@ $(document).ready(function() {
                     let alertCheckToken = '<div class="alert alert-success alert-dismissible rounded-0 mb-2 fade show" role="alert"><i class="bi bi-check-circle me-2"></i>Token dapat digunakan, mohon menunggu...<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
                     $('#alertTokenHolder').append(alertCheckToken);
 
-                    /*
-                    setTimeout(function() {
-                        // window.location.href = '/evaluator/lounge?token=' + token + '&user=guest&timestamp=' + Date.parse(new Date());
-                        window.location.href = '?token=' + token + '&user=guest&timestamp=' + Date.parse(new Date()) + '&ref=home';
-                    }, 1350);
-                    */
+                    $.ajax({
+                        url: '/server/evaluator/update',
+                        type: 'GET',
+                        data: {
+                            token: token,
+                            agent: agent,
+                        },
+                        success: (response) => {
+                            if (response.code === 200) {
+                                setTimeout(function() {
+                                    window.location.href = '/evaluation/score?token=' + response.token + '&user=' + response.name + '&timestamp=' + Date.parse(new Date());
+                                }, 537);
+                            }
+                        }
+                    });
 
+
+                    /*
                     setTimeout(function() {
                     Swal.fire({
                         icon: 'question',
@@ -146,7 +157,7 @@ $(document).ready(function() {
                         }
                     }).then((result) => {
                         $.ajax({
-                            url: '/server/evaluator/create',
+                            url: '/server/evaluator/store',
                             type: 'GET',
                             data: {
                                 token: token,
@@ -161,6 +172,7 @@ $(document).ready(function() {
                         });
                     });
                     }, 537);
+                    */
                 } else if (response.code === 402) {
                     $('#token').removeClass('is-invalid');
                     $('#token').addClass('is-valid');

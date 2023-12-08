@@ -60,6 +60,11 @@
     max-width: 320px;
 }
 
+.w-480 {
+    width: 100%;
+    max-width: 480px;
+}
+
 .h-48 {
     height: 48px !important;
 }

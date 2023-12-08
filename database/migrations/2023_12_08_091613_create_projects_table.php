@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tokenisers', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('token')->nullable()->index();
-            $table->boolean('is_used')->default(0)->nullable()->index();
-            $table->datetime('used_at')->nullable()->index();
-            $table->datetime('expired_at')->default('2031-12-31 23:59:59')->nullable()->index();
+            $table->string('project_number')->index();
+            $table->string('name')->index();
+            $table->text('description')->nullable();
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             $table->softDeletes();
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tokenisers');
+        Schema::dropIfExists('projects');
     }
 };

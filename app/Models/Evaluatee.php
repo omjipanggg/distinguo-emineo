@@ -26,4 +26,8 @@ class Evaluatee extends Model
     public function evaluations() {
     	return $this->hasMany(Evaluation::class);
     }
+
+    public function project() {
+        return $this->belongsTo(Project::class, 'project_number', 'project_number');
+    }
 }

@@ -20,13 +20,14 @@ class Tokeniser extends Model
     ];
 
     public function departments() {
-        return $this->belongsToMany(Department::class, 'pivot_departments_tokenisers')
-            ->orderBy('departments.name')
-            ->withPivot(['assessment_id'])
-        ->withTimestamps();
+        return $this->belongsToMany(Department::class, 'pivot_departments_tokenisers')->orderBy('departments.name')->withPivot(['assessment_id']);
     }
 
     public function evaluator() {
     	return $this->hasOne(Evaluator::class, 'token', 'token');
+    }
+
+    public function projects() {
+        return $this->belongsToMany(Project::class, 'pivot_projects_tokenisers')->orderBy('projects.project_number')->withPivot(['assessment_id']);
     }
 }

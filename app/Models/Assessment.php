@@ -20,6 +20,6 @@ class Assessment extends Model
     }
 
     public function tokenisers() {
-    	return $this->belongsToMany(Tokeniser::class, 'pivot_departments_tokenisers');
+    	return $this->belongsToMany(Tokeniser::class, 'pivot_projects_tokenisers');
     }
 }

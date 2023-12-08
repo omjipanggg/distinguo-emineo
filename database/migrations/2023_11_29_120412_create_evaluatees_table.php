@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('evaluatees', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('project_number')->nullable()->index();
             $table->string('card_number')->nullable()->index();
             $table->string('name')->nullable()->index();
             $table->string('area')->nullable()->index();

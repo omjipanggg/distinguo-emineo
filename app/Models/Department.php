@@ -16,15 +16,10 @@ class Department extends Model
     protected $casts = [];
 
     public function evaluatees() {
-    	return $this->belongsToMany(Department::class, 'pivot_departments_evaluatees')
-        ->orderBy('evaluatees.name')
-        ->withTimestamps();
+    	return $this->belongsToMany(Department::class, 'pivot_departments_evaluatees')->orderBy('departments.name');
     }
 
     public function tokenisers() {
-    	return $this->belongsToMany(Department::class, 'pivot_departments_tokenisers')
-            ->orderBy('departments.name')
-            ->withPivot(['assessment_id'])
-        ->withTimestamps();
+    	return $this->belongsToMany(Department::class, 'pivot_departments_tokenisers')->orderBy('departments.name')->withPivot(['assessment_id']);
     }
 }

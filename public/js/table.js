@@ -14,6 +14,11 @@ if (document.querySelector('table.table-fetch')) {
                 searchPlaceholder: 'Pencarian',
                 processing: 'Mengambil data...'
             },
+            initComplete: function(settings, json) {
+                $('.dataTables_filter input').removeClass('form-control-sm');
+                $('.dataTables_length select').removeClass('form-select-sm');
+                $('.dataTables_wrapper > .row:last-child').addClass('mt-2');
+            },
             createdRow: function(row, data, index) {
                 if (data.deleted_at) {
                     $(row).addClass('deleted');
@@ -44,6 +49,11 @@ if (document.querySelector('table.table-no-info')) {
                 search: '',
                 searchPlaceholder: 'Pencarian',
                 processing: 'Mengambil data...'
+            },
+            initComplete: function(settings, json) {
+                $('.dataTables_filter input').removeClass('form-control-sm');
+                $('.dataTables_length select').removeClass('form-select-sm');
+                $('.dataTables_wrapper > .row:last-child').addClass('mt-2');
             },
             paging: false,
             ordering: false,
@@ -82,6 +92,11 @@ $('#scoringTable').DataTable({
         emptyTable: 'Masukkan TOKEN untuk melihat rincian',
         searchPlaceholder: 'Pencarian',
         processing: 'Mengambil data...'
+    },
+    initComplete: function(settings, json) {
+        $('.dataTables_filter input').removeClass('form-control-sm');
+        $('.dataTables_length select').removeClass('form-select-sm');
+        $('.dataTables_wrapper > .row:last-child').addClass('mt-2');
     },
     order: [
         [2, 'asc']
@@ -170,9 +185,15 @@ $('#tokenTable').DataTable({
         searchPlaceholder: 'Pencarian',
         processing: 'Mengambil data...'
     },
+    initComplete: function(settings, json) {
+        $('.dataTables_filter input').removeClass('form-control-sm');
+        $('.dataTables_length select').removeClass('form-select-sm');
+        $('.dataTables_wrapper > .row:last-child').addClass('mt-2');
+    },
     order: [
         [0, 'asc'],
-        [4, 'desc']
+        [2, 'asc'],
+        [3, 'desc']
     ],
     columns: [
         {
@@ -193,6 +214,17 @@ $('#tokenTable').DataTable({
     			return '<a onclick="copyToClipboard(event, \'' + data + '\');" href="#" class="dotted text-code">'+ data +'<i class="bi bi-copy ms-2"></i></a>';
     		}
     	},
+        {
+            data: 'evaluator.name',
+            title: 'Nama Penilai',
+            render: function(data, type, row, meta) {
+                if (data == null || data == '') {
+                    return '<em>null</em>';
+                }
+                return data.toUpperCase();
+            }
+        },
+        /*
     	{
     		data: 'departments',
     		title: 'Divisi',
@@ -208,17 +240,7 @@ $('#tokenTable').DataTable({
     			}).join(', ');
     		}
     	},
-    	{
-    		data: 'region',
-    		title: 'region',
-    		render: function(data, type, row, meta) {
-    			if (data == null || data == '') {
-    				return '<em>null</em>';
-    			}
-
-    			return data + ' ' + '<strong>[' + row['zone'] + ']</strong>';
-    		}
-    	},
+        */
 	    {
 	    	data: 'used_at',
 	    	title: 'Digunakan Pada',
@@ -228,7 +250,14 @@ $('#tokenTable').DataTable({
     			}
     			return dateTimeIndoFormat(data);
     		}
-	    }
+	    },
+        {
+            data: null,
+            title: 'Aksi',
+            render: function(data, type, row, meta) {
+                return '<a href="/dashboard/token/'+ row['id'] +'" onclick="confirmDelete(event, \'#vanisher\');" class="text-left btn btn-danger px-3 rounded-0 btn-sm">Hapus<i class="bi bi-trash3 ms-2"></i></a>';
+            }
+        }
 	]
 });
 
@@ -254,13 +283,28 @@ $('#userTable').DataTable({
         searchPlaceholder: 'Pencarian',
         processing: 'Mengambil data...'
     },
+    initComplete: function(settings, json) {
+        $('.dataTables_filter input').removeClass('form-control-sm');
+        $('.dataTables_length select').removeClass('form-select-sm');
+        $('.dataTables_wrapper > .row:last-child').addClass('mt-2');
+    },
     order: [
     ],
     columns: [
     	{
-    		data: 'card_number',
-    		title: 'ID'
+    		data: 'project_number',
+    		title: 'No. PO',
+            render: function(data, type, row, meta) {
+                return '<span class="text-code">' + data + '</span>';
+            }
     	},
+        {
+            data: 'card_number',
+            title: 'NIK',
+            render: function(data, type, row, meta) {
+                return '<span class="text-code">' + data + '</span>';
+            }
+        },
     	{
     		data: 'name',
     		title: 'Nama',
@@ -341,6 +385,11 @@ $('#criteriaTable').DataTable({
         searchPlaceholder: 'Pencarian',
         processing: 'Mengambil data...'
     },
+    initComplete: function(settings, json) {
+        $('.dataTables_filter input').removeClass('form-control-sm');
+        $('.dataTables_length select').removeClass('form-select-sm');
+        $('.dataTables_wrapper > .row:last-child').addClass('mt-2');
+    },
     order: [[0, 'asc']],
     columns: [
         {
@@ -408,6 +457,11 @@ $('#evaluationHistoryTable').DataTable({
         emptyTable: 'Masukkan TOKEN untuk melihat rincian',
         searchPlaceholder: 'Pencarian',
         processing: 'Mengambil data...'
+    },
+    initComplete: function(settings, json) {
+        $('.dataTables_filter input').removeClass('form-control-sm');
+        $('.dataTables_length select').removeClass('form-select-sm');
+        $('.dataTables_wrapper > .row:last-child').addClass('mt-2');
     },
     order: [
         [1, 'desc'],

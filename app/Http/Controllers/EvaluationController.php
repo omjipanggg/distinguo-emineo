@@ -46,14 +46,19 @@ class EvaluationController extends Controller
             alert()->error('Kesalahan', 'Token tidak ditemukan.');
 	        return redirect()->route('evaluation.index')->with(['code' => 404, 'message' => 'Token tidak ditemukan.', 'variant' => 'danger', 'icon' => 'x-circle']);
 	    }
-        */
-
         $evaluator = Evaluator::whereHas('tokeniser', function($query) use($token) {
             return $query->where('token', $token);
         })->with(['tokeniser.departments'])->first();
+        */
+
+        $project_numbers = Tokeniser::join('pivot_projects_tokenisers', 'pivot_projects_tokenisers.tokeniser_id', '=', 'tokenisers.id')->join('projects', 'projects.id', '=', 'pivot_projects_tokenisers.project_id')->with('projects')->where('token', $token)->whereHas('evaluator')->pluck('projects.project_number');
+
+        $departments = Evaluatee::join('pivot_departments_evaluatees', 'pivot_departments_evaluatees.evaluatee_id', '=', 'evaluatees.id')->join('departments', 'departments.id', '=', 'pivot_departments_evaluatees.department_id')->select('departments.id', 'departments.name')->whereIn('project_number', $project_numbers)->whereDoesntHave('evaluations.evaluator', function($query) use($token) {
+                return $query->where('token', $token);
+            })->with(['departments', 'evaluations.evaluator'])->get();
 
         $context = [
-            'evaluator' => $evaluator,
+            'departments' => $departments,
             'token' => $token
         ];
 
@@ -64,12 +69,14 @@ class EvaluationController extends Controller
     {
         $token = $request->input('token') ?? null;
 
-        $evaluator = Evaluator::whereHas('tokeniser', function($query) use($token) {
-            return $query->where('token', $token);
-        })->with(['tokeniser.departments'])->first();
+        $project_numbers = Tokeniser::join('pivot_projects_tokenisers', 'pivot_projects_tokenisers.tokeniser_id', '=', 'tokenisers.id')->join('projects', 'projects.id', '=', 'pivot_projects_tokenisers.project_id')->with('projects')->where('token', $token)->whereHas('evaluator')->pluck('projects.project_number');
+
+        $departments = Evaluatee::join('pivot_departments_evaluatees', 'pivot_departments_evaluatees.evaluatee_id', '=', 'evaluatees.id')->join('departments', 'departments.id', '=', 'pivot_departments_evaluatees.department_id')->select('departments.id', 'departments.name')->whereIn('project_number', $project_numbers)->whereHas('evaluations.evaluator', function($query) use($token) {
+                return $query->where('token', $token);
+            })->with(['departments', 'evaluations.evaluator'])->get();
 
         $context = [
-            'evaluator' => $evaluator,
+            'departments' => $departments,
             'token' => $token
         ];
 
@@ -84,7 +91,7 @@ class EvaluationController extends Controller
 
         $materials = Assessment::with(['criterias.type', 'tokenisers'])
             ->whereHas('tokenisers', function($query) use($token) {
-                return $query->where('tokenisers.token', $token);
+                return $query->where('token', $token);
             })
         ->first();
 

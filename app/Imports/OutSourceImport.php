@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Models\Department;
 use App\Models\Evaluatee;
+use App\Models\Project;
 use App\Models\User;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -37,7 +38,8 @@ class OutSourceImport implements ShouldQueue, ToCollection, WithBatchInserts, Wi
                 'name' => $row['nama'],
                 'area' => $row['area'],
                 'region' => $row['regional'],
-                'zone' => $row['zona']
+                'zone' => $row['zona'],
+                'project_number' => $row['no_po']
             ]);
 
             $snake = Str::snake($row['divisi']);
@@ -53,17 +55,25 @@ class OutSourceImport implements ShouldQueue, ToCollection, WithBatchInserts, Wi
                 ]);
             }
 
-            $user = Evaluatee::where('card_number', $card)->first()->departments()->sync([$id]);
+            $user = Evaluatee::where('card_number', $card)->first();
+            $user->departments()->sync([$id]);
+
+            Project::updateOrCreate([
+                'project_number' => $row['no_po']
+            ], [
+                'project_number' => $row['no_po'],
+                'name' => $row['nama_project']
+            ]);
     	}
     }
 
     public function batchSize(): int
     {
-        return 64;
+        return 246;
     }
 
     public function chunkSize(): int
     {
-        return 64;
+        return 246;
     }
 }

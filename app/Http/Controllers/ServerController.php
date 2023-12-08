@@ -57,7 +57,7 @@ class ServerController extends Controller
             }
             else {
                 $data['code'] = 301;
-                $data['message'] = 'Token is either being used, or expired, or not found.';
+                $data['message'] = 'Token is either currently being used, or expired, or not found.';
             }
         }
 
@@ -73,35 +73,22 @@ class ServerController extends Controller
         $token = $request->input('token') ?? null;
 
         $data = [];
-        $param = Tokeniser::select('region', 'zone')->where('token', $token)->whereHas('evaluator')->first();
+        $project_numbers = Tokeniser::join('pivot_projects_tokenisers', 'pivot_projects_tokenisers.tokeniser_id', '=', 'tokenisers.id')->join('projects', 'projects.id', '=', 'pivot_projects_tokenisers.project_id')->with('projects')->where('token', $token)->whereHas('evaluator')->pluck('projects.project_number');
 
-        if ($param) {
-            $departments = Tokeniser::join('pivot_departments_tokenisers', 'pivot_departments_tokenisers.tokeniser_id', '=', 'tokenisers.id')->where('tokenisers.token', $token)->pluck('pivot_departments_tokenisers.department_id');
+        $data = Evaluatee::whereIn('project_number', $project_numbers)->whereDoesntHave('evaluations.evaluator', function($query) use($token) {
+                return $query->where('token', $token);
+            })->with(['departments', 'evaluations.evaluator']);
 
-            $data = Evaluatee::where('region', $param->region)
-                ->where('zone', $param->zone);
-
-
-            if ($request->filled('department')) {
-                $department = $request->input('department');
-                if ($department != 'all') {
-                    $data = $data->whereHas('departments', function($query) use($department) {
-                        return $query->where('department_id', $department);
-                    });
-                }
-            } else {
-
-                $data = $data->whereHas('departments', function($query) use($departments) {
-                    return $query->whereIn('department_id', $departments);
+        if ($request->filled('department')) {
+            $department = $request->input('department');
+            if ($department != 'all') {
+                $data = $data->whereHas('departments', function($query) use($department) {
+                    return $query->where('department_id', $department);
                 });
             }
-
-            $data = $data->whereDoesntHave('evaluations.evaluator', function($query) use($token) {
-                    return $query->where('token', $token);
-                })
-                ->with(['departments', 'evaluations.evaluator'])
-            ->get();
         }
+
+        $data = $data->get();
 
         return DataTables::of($data)->make(true);
     }
@@ -132,12 +119,12 @@ class ServerController extends Controller
     }
 
     public function fetchMembers(Request $request) {
-        $data = Evaluatee::orderBy('name')->with(['departments'])->get();
+        $data = Evaluatee::orderBy('name')->with(['departments', 'project'])->get();
         return DataTables::of($data)->make(true);
     }
 
     public function fetchTokens(Request $request) {
-    	$data = Tokeniser::with(['departments'])->latest()->get();
+    	$data = Tokeniser::with(['evaluator', 'projects'])->latest()->get();
     	return DataTables::of($data)->make(true);
     }
 
@@ -162,6 +149,24 @@ class ServerController extends Controller
             'is_used' => true,
             'used_at' => Carbon::now()
         ]);
+
+        return response()->json($data);
+    }
+
+    public function updateEvaluator(Request $request) {
+        $token = $request->token ?? null;
+
+        $data = Evaluator::where('token', $token)->first();
+
+        $data->update(['user_agent' => $request->agent]);
+
+        $data['code'] = 200;
+
+        $data['token'] = Tokeniser::where('token', $token)
+            ->update([
+                'is_used' => true,
+                'used_at' => Carbon::now()
+            ]);
 
         return response()->json($data);
     }

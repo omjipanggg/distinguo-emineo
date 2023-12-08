@@ -21,7 +21,7 @@ return new class extends Migration
         });
 
         \DB::table('assessments')->insert([
-            ['name' => 'Default', 'description' => 'This is the default value for assessing the outsources.']
+            ['name' => 'Default', 'description' => 'Do not remove this record as this is the default value for assessing purposes.']
         ]);
     }
 

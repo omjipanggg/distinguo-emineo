@@ -37,7 +37,7 @@ return new class extends Migration
             [
                 'id' => '6d0fb7a4-c961-4e89-9c1a-f6b730ced791',
                 'code' => '02',
-                'name' => 'Jabodetabek',
+                'name' => 'Jabotabek',
                 'area_id' => 2,
                 'slug' => 'jbt',
                 'description' => 'Jakarta, Bogor, Depok, Tangerang dan Bekasi.'

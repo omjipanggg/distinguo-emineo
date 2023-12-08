@@ -8,29 +8,42 @@
                 <div class="sb-nav-link-icon pe-2"><i class="bi bi-house"></i></div>
                 Dashboard
             </a>
-            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#materialMenu" aria-expanded="false" aria-controls="materialMenu">
+            <a class="nav-link collapsed" href="login" data-bs-toggle="collapse" data-bs-target="#materialMenu" aria-expanded="false" aria-controls="materialMenu">
                 <div class="sb-nav-link-icon pe-2"><i class="bi bi-journal-bookmark"></i></div>
-                Material
+                Materi
                 <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down-fill"></i></div>
             </a>
             <div class="collapse" id="materialMenu" aria-labelledby="materialMenu" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
                     <a class="{{ (url()->current() == route('assessment.index')) ? 'active' : '' }} nav-link" href="{{ route('assessment.index') }}">
-                        Assessment
+                        Asesmen
                     </a>
                     <a class="{{ (url()->current() == route('criteria.index')) ? 'active' : '' }} nav-link" href="{{ route('criteria.index') }}">
-                        Criteria
+                        Kriteria
                     </a>
                 </nav>
             </div>
-            <a class="nav-link @if(url()->current() == route('token.index')) active @endif" href="{{ route('token.index') }}">
-                <div class="sb-nav-link-icon pe-2"><i class="bi bi-key"></i></div>
-                Token
-            </a>
-            <a class="nav-link @if(url()->current() == route('user.index')) active @endif" href="{{ route('user.index') }}">
+            <a class="nav-link collapsed" href="login" data-bs-toggle="collapse" data-bs-target="#userMenu" aria-expanded="false" aria-controls="userMenu">
                 <div class="sb-nav-link-icon pe-2"><i class="bi bi-people"></i></div>
-                User
+                Pengguna
+                <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down-fill"></i></div>
             </a>
+            <div class="collapse" id="userMenu" aria-labelledby="userMenu" data-bs-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav">
+                    <a class="{{ (url()->current() == route('token.index')) ? 'active' : '' }} nav-link" href="{{ route('token.index') }}">
+                        Penilai (Token)
+                    </a>
+                    <a class="{{ (url()->current() == route('member.index')) ? 'active' : '' }} nav-link" href="{{ route('member.index') }}">
+                        Yang dinilai
+                    </a>
+                    {{--
+                    <a class="nav-link @if(url()->current() == route('user.index')) active @endif" href="{{ route('user.index') }}">
+                        <div class="sb-nav-link-icon pe-2"><i class="bi bi-people"></i></div>
+                        User
+                    </a>
+                    --}}
+                </nav>
+            </div>
         </div>
     </div>
     <form action="{{ route('dashboard.search') }}" class="form form-inline d-inline-block" method="GET">

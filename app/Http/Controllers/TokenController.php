@@ -4,10 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use App\Models\Evaluatee;
+use App\Models\Evaluation;
+use App\Models\Evaluator;
+use App\Models\Project;
 use App\Models\Region;
 use App\Models\Tokeniser;
 
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -25,11 +34,14 @@ class TokenController extends Controller
     public function create()
     {
         $departments = Department::orderBy('name')->get();
-        $zones = Evaluatee::select('zone')->groupBy('zone')->pluck('zone');
         $regions = Region::orderBy('code')->get();
+        $zones = Evaluatee::select('zone')->groupBy('zone')->pluck('zone');
+
+        $projects = Project::orderBy('project_number')->get();
 
         $context = [
             'departments' => $departments,
+            'projects' => $projects,
             'regions' => $regions,
             'zones' => $zones
         ];
@@ -39,14 +51,13 @@ class TokenController extends Controller
 
     public function store(Request $request)
     {
-        $token = Tokeniser::create([
-            'token' => $request->input('token'),
-	    'region' => $request->input('region'),
-	    'zone' => $request->input('zone')
-        ]);
+        $token = Tokeniser::create(['token' => $request->input('token')]);
 
-        $token->departments()->syncWithPivotValues($request->input('departments'), [
-	    'assessment_id' => 1
+        $token->projects()->syncWithPivotValues($request->input('projects'), ['assessment_id' => 1]);
+
+        $evaluator = Evaluator::create([
+            'name' => $request->input('name'),
+            'token' => $request->input('token')
         ]);
 
         alert()->success('Sukses', 'Token baru berhasil dibuat.');
@@ -81,6 +92,8 @@ class TokenController extends Controller
     public function destroy(string $id)
     {
         $tokeniser = Tokeniser::find($id);
+
+        $evaluator = Evaluator::where('token', $tokeniser->token)->delete();
 
         if (!$tokeniser) {
             alert()->error('Kesalahan', 'Token tidak ditemukan.');

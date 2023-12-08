@@ -9,6 +9,7 @@ use App\Models\Tokeniser;
 use App\Models\User;
 
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class EvaluatorController extends Controller
 {
