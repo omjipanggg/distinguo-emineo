@@ -100,6 +100,8 @@ class EvaluationController extends Controller
             'token' => $token
         ];
 
+        return response()->json($materials);
+
         return view('pages.evaluation.form.create', $context);
     }
 

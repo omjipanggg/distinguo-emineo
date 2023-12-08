@@ -2,6 +2,8 @@
 	@method('POST')
 	@csrf
 
+	<input type="hidden" value="1" name="assessment_id" id="assessmentIdOnModal">
+
 	<div class="form-floating">
 		<input type="text" class="form-control" autocomplete="off" placeholder="Token" value="{{ Str::upper(substr(Str::uuid(), -12)) }}" maxlength="24" name="token" id="tokenOnModal">
 		<label for="tokenOnModal">Token</label>
