@@ -19,8 +19,8 @@ class Tokeniser extends Model
         'is_used' => 'boolean'
     ];
 
-    public function assessment() {
-        return $this->belongsTo(Assessment::class);
+    public function assessments() {
+        return $this->belongsToMany(Assessment::class, 'pivot_projects_tokenisers')->orderBy('projects.project_nunmber');
     }
 
     public function departments() {

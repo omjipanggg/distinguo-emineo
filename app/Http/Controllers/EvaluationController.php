@@ -89,10 +89,13 @@ class EvaluationController extends Controller
 
         $evaluatee = Evaluatee::find($request->evaluatee_id);
 
-        $materials = Assessment::join('pivot_projects_tokenisers', 'pivot_projects_tokenisers.assessment_id', '=', 'assessments.id')
-            ->join('tokenisers', 'tokenisers.id', '=', 'pivot_projects_tokenisers.tokeniser_id')
-            ->where('tokenisers.token', $token)
-            ->with(['criterias.type'])
+        $materials = Assessment::with(['criterias.type'])
+            ->whereHas('tokenisers', function($query) use($token) {
+                return $query->where('token', $token);
+            })
+            // ->where('tokenisers.token', $token)
+            // ->join('pivot_projects_tokenisers', 'pivot_projects_tokenisers.assessment_id', '=', 'assessments.id')
+            // ->join('tokenisers', 'tokenisers.id', '=', 'pivot_projects_tokenisers.tokeniser_id')
         ->first();
 
         $context = [

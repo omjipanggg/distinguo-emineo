@@ -79,7 +79,8 @@
 
 	<div class="card animated rounded-0">
 		<div class="card-body">
-			Belum ada materi penilaian yang tersedia.
+			{{ $materials }}
+			{{-- Belum ada materi penilaian yang tersedia. --}}
 		</div>
 	</div>
 
