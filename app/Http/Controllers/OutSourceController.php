@@ -55,6 +55,9 @@ class OutSourceController extends Controller
 
         $file = $request->file('file');
 
+        $name = 'OutSource_' . strtotime('now') . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('uploads', $name, 'public');
+
         Excel::import(new OutSourceImport(), $file);
 
         alert()->success('Sukses', 'Data berhasil diunggah.');

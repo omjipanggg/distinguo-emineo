@@ -20,4 +20,8 @@ class DashboardController extends Controller
     	$context = [];
     	return view('pages.dashboard.index', $context);
     }
+
+    public function config() {
+        //
+    }
 }

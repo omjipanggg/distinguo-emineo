@@ -9,6 +9,7 @@ use App\Http\Controllers\EvaluationController as Evaluation;
 use App\Http\Controllers\EvaluatorController as Evaluator;
 use App\Http\Controllers\HomeController as Home;
 use App\Http\Controllers\OutSourceController as OutSource;
+use App\Http\Controllers\ProjectController as Project;
 use App\Http\Controllers\ServerController as Server;
 use App\Http\Controllers\TokenController as Token;
 use App\Http\Controllers\UserController as User;
@@ -28,6 +29,7 @@ Route::prefix('/')->group(function() {
 /* DASHBOARD ===================================================================== */
 Route::prefix('dashboard')->group(function() {
 	Route::get('/', [Dashboard::class, 'index'])->name('dashboard.index');
+	Route::get('config', [Dashboard::class, 'config'])->name('dashboard.config');
 	Route::get('search', [Dashboard::class, 'search'])->name('dashboard.search');
 });
 
@@ -41,7 +43,6 @@ Route::resource('dashboard/token', Token::class);
 Route::prefix('dashboard/member')->group(function() {
 	Route::post('import', [OutSource::class, 'import'])->name('member.import');
 });
-
 Route::resource('dashboard/member', OutSource::class);
 
 /* ASSESSMENT ===================================================================== */
@@ -55,14 +56,18 @@ Route::resource('dashboard/assessment', Assessment::class);
 Route::prefix('dashboard/criteria')->group(function() {
 	Route::post('import', [Criteria::class, 'import'])->name('criteria.import');
 });
-
 Route::resource('dashboard/criteria', Criteria::class);
+
+/* PROJECT ===================================================================== */
+Route::prefix('dashboard/project')->group(function() {
+	//
+});
+Route::resource('dashboard/project', Project::class);
 
 /* USER ===================================================================== */
 Route::prefix('dashboard/user')->group(function() {
 
 });
-
 Route::resource('dashboard/user', User::class);
 
 /* EVALUATION ===================================================================== */
@@ -71,14 +76,12 @@ Route::prefix('evaluation')->group(function() {
 	Route::get('score', [Evaluation::class, 'score'])->name('evaluation.score');
 	Route::get('temp', [Evaluation::class, 'temp'])->name('evaluation.temp');
 });
-
 Route::resource('evaluation', Evaluation::class);
 
 /* EVALUATOR ===================================================================== */
 Route::prefix('evaluator')->group(function() {
 	Route::get('lounge', [Evaluator::class, 'lounge'])->name('evaluator.lounge');
 });
-
 Route::resource('evaluator', Evaluator::class);
 
 /* SERVER ===================================================================== */

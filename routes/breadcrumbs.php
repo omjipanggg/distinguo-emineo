@@ -37,6 +37,18 @@ Breadcrumbs::for('token.index', function (BreadcrumbTrail $trail) {
     $trail->push('Penilai', route('token.index'));
 });
 
+// Home > Configuration
+Breadcrumbs::for('dashboard.config', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard.index');
+    $trail->push('Konfigurasi', route('dashboard.config'));
+});
+
+// Home > Configuration > Project
+Breadcrumbs::for('project.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard.config');
+    $trail->push('Project', route('project.index'));
+});
+
 // Dashboard > Assessment
 Breadcrumbs::for('assessment.index', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard.index');

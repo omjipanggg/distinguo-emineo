@@ -2,7 +2,7 @@
 	@method('POST')
 	@csrf
 
-	<div class="d-flex flex-wrap flex-column gap-2">
+	<div class="d-flex flex-wrap flex-column gap-3">
 
 	<div class="card animated rounded-0">
 		<div class="card-body">
@@ -10,20 +10,25 @@
 			<div class="table-responsive w-100">
 				<table class="table table-bordered m-0 table-hover">
 					<tr>
+						<td class="fw-bold">ID Project</td>
+						<td class="text-code fw-bold">{{ $evaluatee->project->project_number }}</td>
+						<td class="text-code fw-bold">{{ Str::upper($evaluatee->project->name ?? 'null') }}</td>
+					</tr>
+					<tr>
 						<td>NIK</td>
-						<td class="text-code">{{ Str::upper($evaluatee->card_number ?? 'null') }}</td>
+						<td colspan="2" class="text-code">{{ Str::upper($evaluatee->card_number ?? 'null') }}</td>
 					</tr>
 					<tr>
 						<td>Nama</td>
-						<td class="text-code">{{ Str::upper($evaluatee->name ?? 'null') }}</td>
+						<td colspan="2" class="text-code">{{ Str::upper($evaluatee->name ?? 'null') }}</td>
 					</tr>
 					<tr>
 						<td>Departemen/Divisi</td>
-						<td class="text-code">{{ Str::upper($evaluatee->departments[0]->name ?? 'null') }}</td>
+						<td colspan="2" class="text-code">{{ Str::upper($evaluatee->departments[0]->name ?? 'null') }}</td>
 					</tr>
 					<tr>
 						<td>Area/Wilayah/Zona</td>
-						<td class="text-code">{{ Str::upper($evaluatee->area ?? 'null') }} &mdash; {{ Str::upper($evaluatee->region ?? 'null') }} <strong>[{{ Str::upper($evaluatee->zone ?? 'null') }}]</strong></td>
+						<td colspan="2" class="text-code">{{ Str::upper($evaluatee->area ?? 'null') }} &mdash; {{ Str::upper($evaluatee->region ?? 'null') }} [{{ Str::upper($evaluatee->zone ?? 'null') }}]</td>
 					</tr>
 				</table>
 			</div>
@@ -37,15 +42,14 @@
 
 	<div class="card animated rounded-0">
 		<div class="card-body">
-			<div class="row align-items-center justify-content-center">
-				<div class="col-12">
-					<div class="fw-bold mb-3">{{ $loop->iteration }}. {{ $point->name }}</div>
+			<div class="row align-items-center justify-content-center g-3">
+				@if ($point->criteria_type_id == 1)
+				<div class="col-md-6">
+					<div class="fw-bold mb-2">{{ $loop->iteration }}. {{ $point->name }}</div>
 					<div class="text-justify">{{ $point->description }}</div>
+				</div>
 
-					@if ($point->criteria_type_id == 1)
-
-					<div class="mt-3"></div>
-
+				<div class="col-md-4 offset-md-2">
 					<select required="" name="remarks-{{ $point->id }}" id="remarks-{{ $point->id }}" class="rating">
 						<option value="">Rate</option>
 						<option value="5">Sangat baik</option>
@@ -54,19 +58,23 @@
 						<option value="2">Kurang</option>
 						<option value="1">Sangat kurang</option>
 					</select>
+				</div>
 
-					@elseif ($point->criteria_type_id == 2)
+				@elseif ($point->criteria_type_id == 2)
+
+				<div class="col-12">
+					<div class="fw-bold mb-3">{{ $loop->iteration }}. {{ $point->name }}</div>
+					<div class="text-justify">{{ $point->description }}</div>
 
 					<textarea name="remarks-{{ $point->id }}" id="remarks-{{ $point->id }}" class="form-control" required="" placeholder="Remarks" cols="30" rows="10"></textarea>
-
-					@endif
-
 				</div>
+				@endif
 			</div>
 		</div>
 	</div>
 
 	@php($id+=1)
+
 	@endforeach
 
 	<div class="card animated rounded-0">
