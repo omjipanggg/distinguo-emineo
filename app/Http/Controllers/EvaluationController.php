@@ -89,9 +89,10 @@ class EvaluationController extends Controller
 
         $evaluatee = Evaluatee::find($request->evaluatee_id);
 
-        $materials = Assessment::join('pivot_projects_tokenisers', 'pivot_projects_tokenisers.assessment_id', '=', 'assessments.id')->with(['criterias.type'])
-        ->join('tokenisers', 'tokenisers.id', '=', 'pivot_projects_tokenisers.tokeniser_id')
-        ->where('token', $token)
+        $materials = Assessment::join('pivot_projects_tokenisers', 'pivot_projects_tokenisers.assessment_id', '=', 'assessments.id')
+            ->join('tokenisers', 'tokenisers.id', '=', 'pivot_projects_tokenisers.tokeniser_id')
+            ->where('tokenisers.token', $token)
+            ->with(['criterias.type'])
         ->first();
 
         $context = [
@@ -100,6 +101,7 @@ class EvaluationController extends Controller
             'token' => $token
         ];
 
+        // return response()->json($materials);
         return view('pages.evaluation.form.create', $context);
     }
 

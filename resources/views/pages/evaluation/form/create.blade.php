@@ -38,7 +38,7 @@
 
 	@php($id=1)
 
-	@foreach($materials->criterias as $point)
+	@forelse($materials->criterias as $point)
 
 	<div class="card animated rounded-0">
 		<div class="card-body">
@@ -75,7 +75,15 @@
 
 	@php($id+=1)
 
-	@endforeach
+	@empty
+
+	<div class="card animated rounded-0">
+		<div class="card-body">
+			Belum ada materi penilaian yang tersedia.
+		</div>
+	</div>
+
+	@endforelse
 
 	<div class="card animated rounded-0">
 		<div class="card-body pb-4">
