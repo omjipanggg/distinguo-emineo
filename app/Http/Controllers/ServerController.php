@@ -120,7 +120,7 @@ class ServerController extends Controller
     }
 
     public function fetchMembers(Request $request) {
-        $data = Evaluatee::orderBy('name')->with(['departments', 'project'])->get();
+        $data = Evaluatee::orderBy('name')->with(['departments'])->get();
         return DataTables::of($data)->make(true);
     }
 
