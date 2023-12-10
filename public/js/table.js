@@ -243,7 +243,7 @@ $('#tokenTable').DataTable({
                 return data.map((item) => {
                     let pad = '';
                     if (data.length > 1) { pad = 'me-1'; }
-                    return '<strong>[' + item.project_number + ']</strong> ' + item.name;
+                    return '<strong>[' + item.project_number + ']</strong> ' + truncateText(item.name, 24);
                 }).join('<br>');
             }
         },
@@ -454,7 +454,7 @@ $('#projectTable').DataTable({
             title: 'Total',
             render: function(data, type, row, meta) {
                 if (data == null || data == '' || data == 0) {
-                    return '<em>0</em>';
+                    return '<strong>0</strong> Peserta';
                 }
                 return '<strong>' + data + '</strong> Peserta';
             }
