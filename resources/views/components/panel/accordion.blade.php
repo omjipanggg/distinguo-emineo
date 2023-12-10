@@ -19,16 +19,18 @@
             </a>
             <div class="collapse" id="configurationMenu" aria-labelledby="configurationMenu" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    {{--
-                    <a class="{{ (url()->current() == route('dashboard.index')) ? 'active' : '' }} nav-link disabled" href="{{ route('dashboard.index') }}">
-                        Departemen
+                    <a class="{{ (url()->current() == route('assessment.index')) ? 'active' : '' }} nav-link" href="{{ route('assessment.index') }}">
+                        Asesmen
                     </a>
-                    --}}
+                    <a class="{{ (url()->current() == route('criteria.index')) ? 'active' : '' }} nav-link" href="{{ route('criteria.index') }}">
+                        Kriteria
+                    </a>
                     <a class="{{ (url()->current() == route('project.index')) ? 'active' : '' }} nav-link" href="{{ route('project.index') }}">
                         Project
                     </a>
                 </nav>
             </div>
+            {{--
             <a class="nav-link collapsed" href="/menu" data-bs-toggle="collapse" data-bs-target="#materialMenu" aria-expanded="false" aria-controls="materialMenu">
                 <div class="sb-nav-link-icon pe-2"><i class="bi bi-journal-bookmark"></i></div>
                 Materi
@@ -44,6 +46,7 @@
                     </a>
                 </nav>
             </div>
+            --}}
             <a class="nav-link collapsed" href="/menu" data-bs-toggle="collapse" data-bs-target="#userMenu" aria-expanded="false" aria-controls="userMenu">
                 <div class="sb-nav-link-icon pe-2"><i class="bi bi-people"></i></div>
                 Pengguna

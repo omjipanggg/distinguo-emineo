@@ -64,13 +64,13 @@ Breadcrumbs::for('project.index', function (BreadcrumbTrail $trail) {
 
 // Dashboard > Assessment
 Breadcrumbs::for('assessment.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard.material');
+    $trail->parent('dashboard.config');
     $trail->push('Asesmen', route('assessment.index'));
 });
 
 // Dashboard > Criteria
 Breadcrumbs::for('criteria.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard.material');
+    $trail->parent('dashboard.config');
     $trail->push('Kriteria', route('criteria.index'));
 });
 
