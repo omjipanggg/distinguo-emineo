@@ -6,6 +6,7 @@ $(document).ready(function() {
 
         $('#toggle-mode-icon').removeClass('bi-cloud-moon');
         $('#toggle-mode-icon').addClass('bi-cloud-sun');
+
     } else {
         $('body').attr('data-bs-theme', 'light');
 

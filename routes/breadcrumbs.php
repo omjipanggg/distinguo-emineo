@@ -17,7 +17,8 @@ Breadcrumbs::for('evaluator.lounge', function (BreadcrumbTrail $trail, Tokeniser
 
 // Dashboard
 Breadcrumbs::for('evaluation.index', function (BreadcrumbTrail $trail) {
-    $trail->push('Dashboard', route('evaluation.index'));
+    $trail->parent('dashboard.index');
+    $trail->push('Evaluasi', route('evaluation.index'));
 });
 
 // Dashboard > Score
@@ -31,16 +32,22 @@ Breadcrumbs::for('dashboard.index', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('dashboard.index'));
 });
 
-// Home > Tokeniser
-Breadcrumbs::for('token.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard.index');
-    $trail->push('Penilai', route('token.index'));
-});
-
-// Home > Configuration
+// Home > Configuration (Holder)
 Breadcrumbs::for('dashboard.config', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard.index');
-    $trail->push('Konfigurasi', route('dashboard.config'));
+    $trail->push('Konfigurasi', null);
+});
+
+// Home > Material (Holder)
+Breadcrumbs::for('dashboard.material', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard.index');
+    $trail->push('Materi', null);
+});
+
+// Home > User (Holder)
+Breadcrumbs::for('dashboard.user', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard.index');
+    $trail->push('Pengguna', null);
 });
 
 // Home > Department
@@ -51,31 +58,37 @@ Breadcrumbs::for('dashboard.department', function (BreadcrumbTrail $trail) {
 
 // Home > Project
 Breadcrumbs::for('project.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard.index');
+    $trail->parent('dashboard.config');
     $trail->push('Project', route('project.index'));
 });
 
 // Dashboard > Assessment
 Breadcrumbs::for('assessment.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard.index');
+    $trail->parent('dashboard.material');
     $trail->push('Asesmen', route('assessment.index'));
 });
 
 // Dashboard > Criteria
 Breadcrumbs::for('criteria.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard.index');
+    $trail->parent('dashboard.material');
     $trail->push('Kriteria', route('criteria.index'));
 });
 
 // Home > User
 Breadcrumbs::for('user.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard.index');
+    $trail->parent('dashboard.user');
     $trail->push('Pengguna', route('user.index'));
+});
+
+// Home > Tokeniser
+Breadcrumbs::for('token.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard.user');
+    $trail->push('Penilai', route('token.index'));
 });
 
 // Home > Out Source
 Breadcrumbs::for('member.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard.index');
+    $trail->parent('dashboard.user');
     $trail->push('Peserta', route('member.index'));
 });
 

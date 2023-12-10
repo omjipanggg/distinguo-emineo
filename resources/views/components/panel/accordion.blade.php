@@ -8,6 +8,10 @@
                 <div class="sb-nav-link-icon pe-2"><i class="bi bi-house"></i></div>
                 Dashboard
             </a>
+            <a class="nav-link @if(url()->current() == route('evaluation.index')) active @endif" href="{{ route('evaluation.index') }}">
+                <div class="sb-nav-link-icon pe-2"><i class="bi bi-bar-chart-line"></i></div>
+                Evaluasi
+            </a>
             <a class="nav-link collapsed" href="/menu" data-bs-toggle="collapse" data-bs-target="#configurationMenu" aria-expanded="false" aria-controls="configurationMenu">
                 <div class="sb-nav-link-icon pe-2"><i class="bi bi-database-gear"></i></div>
                 Konfigurasi

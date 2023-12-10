@@ -16,7 +16,9 @@
                     <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between">
                         <span>Project</span>
 
-                        <a href="{{ route('project.create') }}" data-bs-toggle="modal" data-bs-target="#modalControl" data-bs-table="Project" data-bs-type="Add" class="btn btn-primary px-3 rounded-1">Tambah<i class="bi bi-plus-square-dotted ms-2"></i></a>
+                        {{--
+                        <a href="{{ route('project.create') }}" data-bs-toggle="modal" data-bs-target="#modalControl" data-bs-table="Project" data-bs-type="Add" class="btn btn-primary px-3 rounded-1" onclick="underMaintenance(event);">Tambah<i class="bi bi-plus-square-dotted ms-2"></i></a>
+                        --}}
                     </div>
                 </div>
 

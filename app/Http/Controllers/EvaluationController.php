@@ -27,6 +27,7 @@ class EvaluationController extends Controller
         $context = [
             'queries' => $queries
         ];
+
         return view('pages.evaluation.index', $context);
     }
 

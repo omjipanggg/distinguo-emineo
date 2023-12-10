@@ -99,6 +99,11 @@ class ServerController extends Controller
         return DataTables::of($data)->make(true);
     }
 
+    public function fetchEvaluation(Request $request) {
+        $data = Evaluation::with(['criteria.type', 'evaluatee.departments', 'evaluator'])->where('criteria_id', 999)->latest()->get();
+        return DataTables::of($data)->make(true);
+    }
+
     public function fetchEvaluationHistory(Request $request) {
         $token = $request->token ?? null;
 

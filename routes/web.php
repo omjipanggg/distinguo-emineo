@@ -30,6 +30,8 @@ Route::prefix('/')->group(function() {
 Route::prefix('dashboard')->group(function() {
 	Route::get('/', [Dashboard::class, 'index'])->name('dashboard.index');
 	Route::get('config', [Dashboard::class, 'config'])->name('dashboard.config');
+	Route::get('material', [Dashboard::class, 'material'])->name('dashboard.material');
+	Route::get('user', [Dashboard::class, 'user'])->name('dashboard.user');
 	Route::get('search', [Dashboard::class, 'search'])->name('dashboard.search');
 });
 
@@ -94,6 +96,7 @@ Route::prefix('server')->group(function() {
 	Route::get('fetch', [Server::class, 'fetch'])->name('server.fetch');
 	Route::get('fetch/assessments', [Server::class, 'fetchAssessments'])->name('server.fetchAssessments');
 	Route::get('fetch/criterias', [Server::class, 'fetchCriterias'])->name('server.fetchCriterias');
+	Route::get('fetch/evaluations', [Server::class, 'fetchEvaluation'])->name('server.fetchEvaluation');
 	Route::get('fetch/evaluations/history', [Server::class, 'fetchEvaluationHistory'])->name('server.fetchEvaluationHistory');
 	Route::get('fetch/members', [Server::class, 'fetchMembers'])->name('server.fetchMembers');
 	Route::get('fetch/projects', [Server::class, 'fetchProjects'])->name('server.fetchProjects');

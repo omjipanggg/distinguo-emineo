@@ -1,6 +1,10 @@
 <div class="table-responsive w-100">
 	<table class="table table-bordered m-0 table-hover">
 		<tr>
+			<td>No. PO</td>
+			<td class="text-code">{{ Str::upper($evaluatee->project_number) }}</td>
+		</tr>
+		<tr>
 			<td>NIK/Nama</td>
 			<td class="text-code">{{ Str::upper($evaluatee->card_number ?? 'null') }} &mdash; {{ Str::upper($evaluatee->name ?? 'null') }}</td>
 		</tr>

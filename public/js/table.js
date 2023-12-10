@@ -36,7 +36,8 @@ if (document.querySelector('table.table-fetch')) {
 
 if (document.querySelector('table.table-no-info')) {
     [...document.body.querySelectorAll('table.table-no-info')].map((item) => {
-        let order = $(item).data('bsOrder') || null;
+        let emptyDef = $(item).data('bsEmpty') || 'JK';
+        let orderDef = $(item).data('bsOrder') || null;
         let tableNoInfo = $(item).DataTable({
             language: {
                 url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
@@ -48,7 +49,8 @@ if (document.querySelector('table.table-no-info')) {
                 lengthMenu: '_MENU_',
                 search: '',
                 searchPlaceholder: 'Pencarian',
-                processing: 'Mengambil data...'
+                processing: 'Mengambil data...',
+                emptyTable: emptyDef
             },
             initComplete: function(settings, json) {
                 $('.dataTables_filter input').removeClass('form-control-sm');
@@ -241,8 +243,8 @@ $('#tokenTable').DataTable({
                 return data.map((item) => {
                     let pad = '';
                     if (data.length > 1) { pad = 'me-1'; }
-                    return '[' + item.project_number + '] ' + item.name;
-                }).join(', ');
+                    return '<strong>[' + item.project_number + ']</strong> ' + item.name;
+                }).join('<br>');
             }
         },
         /*
@@ -435,6 +437,7 @@ $('#projectTable').DataTable({
                 return data;
             }
         },
+        /*
         {
             data: 'description',
             title: 'Deskripsi',
@@ -445,6 +448,7 @@ $('#projectTable').DataTable({
                 return truncateText(data, 36);
             }
         },
+        */
         {
             data: 'total',
             title: 'Total',
@@ -522,7 +526,7 @@ $('#criteriaTable').DataTable({
                 }
                 return truncateText(data, 57);
             }
-        },
+        }
     ],
     createdRow: function(row, data, index) {
         if (data.deleted_at) {
@@ -585,6 +589,111 @@ $('#assessmentTable').DataTable({
                     if (data.length > 1) { pad = 'me-1'; }
                     return '<li class="text-code">' + item.name + '</li>';
                 }).join('') + '</ol>';
+            }
+        }
+    ],
+    createdRow: function(row, data, index) {
+        if (data.deleted_at) {
+            $(row).addClass('deleted');
+        }
+    }
+});
+
+$('#evaluationTable').DataTable({
+    ajax: {
+        url: '/server/fetch/evaluations',
+    },
+    processing: true,
+    serverSide: true,
+    orderCellsTop: true,
+    scrollCollapse: true,
+    scrollY: true,
+    scrollX: true,
+    language: {
+        url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
+        paginate: {
+            previous: '<i class="bi bi-caret-left-fill"></i>',
+            next: '<i class="bi bi-caret-right-fill"></i>'
+        },
+        infoFiltered: '',
+        lengthMenu: '_MENU_',
+        search: '',
+        searchPlaceholder: 'Pencarian',
+        processing: 'Mengambil data...'
+    },
+    initComplete: function(settings, json) {
+        $('.dataTables_filter input').removeClass('form-control-sm');
+        $('.dataTables_length select').removeClass('form-select-sm');
+        $('.dataTables_wrapper > .row:last-child').addClass('mt-2');
+    },
+     order: [
+        [1, 'desc'],
+        [3, 'asc']
+    ],
+    columns: [
+        {
+            data: null,
+            title: 'Aksi',
+            render: function(data, type, row, meta) {
+                return '<a href="/evaluation/'+ row['batch'] +'/edit?token='+ row['evaluator']['token'] +'&evaluatee_id='+ row['evaluatee']['id'] +'" data-bs-toggle="modal" data-bs-target="#modalControl" data-bs-table="Evaluation" data-bs-type="Detail" class="text-left btn btn-secondary rounded-0 btn-sm px-3 me-2">Rincian<i class="bi bi-box-arrow-up-right ms-2"></i></a><a href="/evaluation/'+ row['id'] +'" onclick="confirmDelete(event, \'#vanisher\');" class="text-left btn btn-danger px-3 rounded-0 btn-sm">Hapus<i class="bi bi-trash3 ms-2"></i></a>';
+            },
+            orderable: false,
+            searchable: false
+        },
+        {
+            data: 'created_at',
+            title: 'Tgl. Penilaian',
+            render: function(data, type, row, meta) {
+                return dateTimeIndoFormat(data);
+            }
+        },
+        {
+            data: 'evaluatee.name',
+            title: 'Nama Peserta',
+            render: function(data, type, row, meta) {
+                if (data == null || data == '') {
+                    return '<em>null</em>';
+                }
+                return data.toUpperCase();
+            }
+        },
+        {
+            data: 'evaluator.name',
+            title: 'Nama Penilai',
+            render: function(data, type, row, meta) {
+                if (data == null || data == '') {
+                    return '<em>null</em>';
+                }
+                return data.toUpperCase();
+            }
+        },
+        {
+            data: 'evaluatee.project_number',
+            title: 'No. PO',
+            render: function(data, type, row, meta) {
+                if (data == null || data == '') {
+                    return '<em>null</em>';
+                }
+                return data.toUpperCase();
+            }
+        },
+        {
+            data: 'remarks',
+            title: 'Status',
+            render: function(data, type, row, meta) {
+                if (data == null || data == '') {
+                    return '<em>null</em>';
+                }
+
+                if (data === 'Direkomendasikan') {
+                    return '<span class="badge text-bg-success rounded-5 pe-3"><i class="bi bi-check-circle me-2"></i>' + data + '</span>';
+                } else if (data === 'Dipertimbangkan') {
+                    return '<span class="badge text-bg-secondary rounded-5 pe-3"><i class="bi bi-question-circle me-2"></i>' + data + '</span>';
+                } else if (data === 'Belum direkomendasikan') {
+                    return '<span class="badge text-bg-danger rounded-5 pe-3"><i class="bi bi-x-circle me-2"></i>' + data + '</span>';
+                } else {
+                    return data.toUpperCase();
+                }
             }
         }
     ],
@@ -717,7 +826,7 @@ $('#evaluationHistoryTable').DataTable({
                     return data.toUpperCase();
                 }
             }
-        },
+        }
     ],
     createdRow: function(row, data, index) {
         if (data.deleted_at) {
