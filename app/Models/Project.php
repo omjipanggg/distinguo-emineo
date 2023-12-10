@@ -16,6 +16,6 @@ class Project extends Model
     protected $casts = [];
 
     public function tokenisers() {
-        return $this->belongsToMany(Project::class, 'pivot_projects_tokenisers')->orderBy('projects.project_number');
+        return $this->belongsToMany(Tokeniser::class, 'pivot_projects_tokenisers');
     }
 }

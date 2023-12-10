@@ -96,6 +96,7 @@ Route::prefix('server')->group(function() {
 	Route::get('fetch/criterias', [Server::class, 'fetchCriterias'])->name('server.fetchCriterias');
 	Route::get('fetch/evaluations/history', [Server::class, 'fetchEvaluationHistory'])->name('server.fetchEvaluationHistory');
 	Route::get('fetch/members', [Server::class, 'fetchMembers'])->name('server.fetchMembers');
+	Route::get('fetch/projects', [Server::class, 'fetchProjects'])->name('server.fetchProjects');
 	Route::get('fetch/scores', [Server::class, 'fetchScores'])->name('server.fetchScores');
 	Route::get('fetch/tokens', [Server::class, 'fetchTokens'])->name('server.fetchTokens');
 	Route::get('fetch/users', [Server::class, 'fetchUsers'])->name('server.fetchUsers');

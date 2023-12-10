@@ -59,6 +59,7 @@ class EvaluationController extends Controller
 
         $context = [
             'departments' => $departments,
+            'project_numbers' => $project_numbers,
             'token' => $token
         ];
 
@@ -77,6 +78,7 @@ class EvaluationController extends Controller
 
         $context = [
             'departments' => $departments,
+            'project_numbers' => $project_numbers,
             'token' => $token
         ];
 

@@ -7,6 +7,7 @@ use App\Models\Criteria;
 use App\Models\Evaluatee;
 use App\Models\Evaluation;
 use App\Models\Evaluator;
+use App\Models\Project;
 use App\Models\Tokeniser;
 use App\Models\User;
 
@@ -34,7 +35,7 @@ class ServerController extends Controller
             if (Schema::hasColumn($table, 'name')) {
                 $data = $data->orderBy('name');
             }
-            $data = $data->get();
+            $data = $data->latest()->get();
     	} else { $data = []; }
 	    return DataTables::of($data)->make(true);
     }
@@ -82,11 +83,15 @@ class ServerController extends Controller
 
         if ($request->filled('department')) {
             $department = $request->input('department');
+            $data = $data->where('project_number', $department);
+
+            /*
             if ($department != 'all') {
                 $data = $data->whereHas('departments', function($query) use($department) {
                     return $query->where('department_id', $department);
                 });
             }
+            */
         }
 
         $data = $data->get();
@@ -107,15 +112,24 @@ class ServerController extends Controller
 
         if ($request->has('department')) {
             $department = $request->department;
+            $data = $data->where('project_number', $department);
+
+            /*
             if ($department != 'all') {
                 $data = $data->whereHas('evaluatee.departments', function($query) use($department) {
                     return $query->where('department_id', $department);
                 });
             }
+            */
         }
 
         $data = $data->with(['criteria.type', 'evaluatee.departments', 'evaluator'])->get();
 
+        return DataTables::of($data)->make(true);
+    }
+
+    public function fetchProjects(Request $request) {
+        $data = Project::leftJoin('evaluatees', 'evaluatees.project_number', '=', 'projects.project_number')->select('projects.project_number', 'projects.name', 'projects.description')->selectRaw('COUNT(evaluatees.id) as total')->groupBy('projects.project_number', 'projects.name', 'projects.description')->orderBy('projects.project_number')->get();
         return DataTables::of($data)->make(true);
     }
 

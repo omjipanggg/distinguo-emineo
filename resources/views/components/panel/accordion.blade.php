@@ -8,22 +8,24 @@
                 <div class="sb-nav-link-icon pe-2"><i class="bi bi-house"></i></div>
                 Dashboard
             </a>
-            <a class="nav-link collapsed" href="login" data-bs-toggle="collapse" data-bs-target="#configurationMenu" aria-expanded="false" aria-controls="configurationMenu">
+            <a class="nav-link collapsed" href="/menu" data-bs-toggle="collapse" data-bs-target="#configurationMenu" aria-expanded="false" aria-controls="configurationMenu">
                 <div class="sb-nav-link-icon pe-2"><i class="bi bi-database-gear"></i></div>
                 Konfigurasi
                 <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down-fill"></i></div>
             </a>
             <div class="collapse" id="configurationMenu" aria-labelledby="configurationMenu" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="{{ (url()->current() == route('home.index')) ? 'active' : '' }} nav-link" href="{{ route('home.index') }}">
-                        Department
+                    {{--
+                    <a class="{{ (url()->current() == route('dashboard.index')) ? 'active' : '' }} nav-link disabled" href="{{ route('dashboard.index') }}">
+                        Departemen
                     </a>
+                    --}}
                     <a class="{{ (url()->current() == route('project.index')) ? 'active' : '' }} nav-link" href="{{ route('project.index') }}">
                         Project
                     </a>
                 </nav>
             </div>
-            <a class="nav-link collapsed" href="login" data-bs-toggle="collapse" data-bs-target="#materialMenu" aria-expanded="false" aria-controls="materialMenu">
+            <a class="nav-link collapsed" href="/menu" data-bs-toggle="collapse" data-bs-target="#materialMenu" aria-expanded="false" aria-controls="materialMenu">
                 <div class="sb-nav-link-icon pe-2"><i class="bi bi-journal-bookmark"></i></div>
                 Materi
                 <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down-fill"></i></div>
@@ -38,7 +40,7 @@
                     </a>
                 </nav>
             </div>
-            <a class="nav-link collapsed" href="login" data-bs-toggle="collapse" data-bs-target="#userMenu" aria-expanded="false" aria-controls="userMenu">
+            <a class="nav-link collapsed" href="/menu" data-bs-toggle="collapse" data-bs-target="#userMenu" aria-expanded="false" aria-controls="userMenu">
                 <div class="sb-nav-link-icon pe-2"><i class="bi bi-people"></i></div>
                 Pengguna
                 <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down-fill"></i></div>
@@ -96,7 +98,7 @@
                 Penilaian
             </a>
             --}}
-            <a class="nav-link collapsed" href="login" data-bs-toggle="collapse" data-bs-target="#assessmentMenu" aria-expanded="false" aria-controls="assessmentMenu">
+            <a class="nav-link collapsed" href="/menu" data-bs-toggle="collapse" data-bs-target="#assessmentMenu" aria-expanded="false" aria-controls="assessmentMenu">
                 <div class="sb-nav-link-icon pe-2"><i class="bi bi-bar-chart-line"></i></div>
                 Penilaian
                 <div class="sb-sidenav-collapse-arrow"><i class="bi bi-caret-down-fill"></i></div>

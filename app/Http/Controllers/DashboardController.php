@@ -16,12 +16,12 @@ class DashboardController extends Controller
     }
 
     public function search(Request $request) {
-    	dd($request->all());
     	$context = [];
     	return view('pages.dashboard.index', $context);
     }
 
     public function config() {
-        //
+        $context = [];
+        return view('pages.dashboard.config', $context);
     }
 }

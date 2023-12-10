@@ -254,6 +254,8 @@ $(document).ready(function() {
         });
     }
 
+    // ACTIVE LINKS ON THE ACCORDION
+    // ================================================================================
     const currentUrl = window.location.href;
     let baseUrl = window.location.origin;
     let $matchingLinks = $('#sidenavAccordion a.nav-link[href="' + currentUrl + '"]');
@@ -266,10 +268,12 @@ $(document).ready(function() {
         $parentCollapse.prev().removeClass('collapsed');
         $parentCollapse.prev().addClass('active');
 
+        /*
         let $grandParentCollapse = $parentCollapse.parent().closest('.collapse');
         $grandParentCollapse.addClass('show');
         $grandParentCollapse.prev().removeClass('collapsed');
         $grandParentCollapse.prev().addClass('active');
+        */
     } else {
         segments.pop();
         // let parentUrl = baseUrl + segments.join('/');

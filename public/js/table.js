@@ -139,6 +139,7 @@ $('#scoringTable').DataTable({
                 return data.toUpperCase() + ' ' + '<strong>[' + row['zone'].toUpperCase() + ']</strong>';
             }
         },
+        /*
         {
             data: 'departments',
             title: 'Divisi',
@@ -154,6 +155,11 @@ $('#scoringTable').DataTable({
                     return item.name.toUpperCase();
                 }).join(', ');
             }
+        }
+        */
+        {
+            data: 'project_number',
+            title: 'No. PO'
         }
     ],
     createdRow: function(row, data, index) {
@@ -222,6 +228,21 @@ $('#tokenTable').DataTable({
                     return '<em>null</em>';
                 }
                 return data.toUpperCase();
+            }
+        },
+        {
+            data: 'projects',
+            title: 'No. PO',
+            render: function(data, type, row, meta) {
+                if (!data.length) {
+                    return '<em>null</em>';
+                }
+
+                return data.map((item) => {
+                    let pad = '';
+                    if (data.length > 1) { pad = 'me-1'; }
+                    return '[' + item.project_number + '] ' + item.name;
+                }).join(', ');
             }
         },
         /*
@@ -363,6 +384,84 @@ $('#memberTable').DataTable({
     		}
     	}
 	]
+});
+
+$('#projectTable').DataTable({
+    ajax: {
+        url: '/server/fetch/projects',
+    },
+    processing: true,
+    serverSide: true,
+    orderCellsTop: true,
+    scrollCollapse: true,
+    scrollY: true,
+    scrollX: true,
+    language: {
+        url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
+        paginate: {
+            previous: '<i class="bi bi-caret-left-fill"></i>',
+            next: '<i class="bi bi-caret-right-fill"></i>'
+        },
+        infoFiltered: '',
+        lengthMenu: '_MENU_',
+        search: '',
+        searchPlaceholder: 'Pencarian',
+        processing: 'Mengambil data...'
+    },
+    initComplete: function(settings, json) {
+        $('.dataTables_filter input').removeClass('form-control-sm');
+        $('.dataTables_length select').removeClass('form-select-sm');
+        $('.dataTables_wrapper > .row:last-child').addClass('mt-2');
+    },
+    order: [[0, 'asc'], [1, 'asc']],
+    columns: [
+        {
+            data: 'project_number',
+            title: 'No. PO',
+            render: function(data, type, row, meta) {
+                if (data == null || data == '') {
+                    return '<em>null</em>';
+                }
+                return data;
+            }
+        },
+        {
+            data: 'name',
+            title: 'Nama',
+            render: function(data, type, row, meta) {
+                if (data == null || data == '') {
+                    return '<em>null</em>';
+                }
+                return data;
+            }
+        },
+        {
+            data: 'description',
+            title: 'Deskripsi',
+            render: function(data, type, row, meta) {
+                if (data == null || data == '') {
+                    return '<em>null</em>';
+                }
+                return truncateText(data, 36);
+            }
+        },
+        {
+            data: 'total',
+            title: 'Total',
+            render: function(data, type, row, meta) {
+                if (data == null || data == '' || data == 0) {
+                    return '<em>0</em>';
+                }
+                return '<strong>' + data + '</strong> Peserta';
+            }
+        }
+    ],
+    createdRow: function(row, data, index) {
+        if (data.deleted_at) {
+            $(row).addClass('deleted');
+        }
+        $(row).find('td:eq(2)').attr('title', data.description);
+    }
 });
 
 $('#criteriaTable').DataTable({
@@ -579,6 +678,7 @@ $('#evaluationHistoryTable').DataTable({
                 return data.toUpperCase() + ' ' + '<strong>[' + row['evaluatee']['zone'].toUpperCase() + ']</strong>';
             }
         },
+        /*
         {
             data: 'evaluatee.departments',
             title: 'Divisi',
@@ -593,6 +693,11 @@ $('#evaluationHistoryTable').DataTable({
                     return item.name.toUpperCase();
                 }).join(', ');
             }
+        },
+        */
+        {
+            data: 'evaluatee.project_number',
+            title: 'No. PO'
         },
         {
             data: 'remarks',

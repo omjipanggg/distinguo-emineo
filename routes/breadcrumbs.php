@@ -43,9 +43,15 @@ Breadcrumbs::for('dashboard.config', function (BreadcrumbTrail $trail) {
     $trail->push('Konfigurasi', route('dashboard.config'));
 });
 
-// Home > Configuration > Project
+// Home > Department
+Breadcrumbs::for('dashboard.department', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard.index');
+    $trail->push('Departemen', route('dashboard.department'));
+});
+
+// Home > Project
 Breadcrumbs::for('project.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard.config');
+    $trail->parent('dashboard.index');
     $trail->push('Project', route('project.index'));
 });
 
