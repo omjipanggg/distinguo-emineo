@@ -316,13 +316,6 @@ $('#memberTable').DataTable({
         [2, 'asc']
     ],
     columns: [
-        {
-            data: null,
-            title: 'Aksi',
-            render: function(data, type, row, meta) {
-                return '<a href="/dashboard/member/'+ row['batch'] +'/edit" data-bs-toggle="modal" data-bs-target="#modalControl" data-bs-table="Peserta" data-bs-type="Ubah" class="text-left btn btn-secondary rounded-0 btn-sm px-3 me-2">Ubah<i class="bi bi-pencil-square ms-2"></i></a><a href="/dashboard/member/'+ row['id'] +'" onclick="confirmDelete(event, \'#vanisher\');" class="text-left btn btn-danger px-3 rounded-0 btn-sm">Hapus<i class="bi bi-trash3 ms-2"></i></a>';
-            }
-        },
     	{
     		data: 'project_number',
     		title: 'No. PO',
@@ -391,7 +384,14 @@ $('#memberTable').DataTable({
     			}
     			return data.toUpperCase();
     		}
-    	}
+    	},
+        {
+            data: null,
+            title: 'Aksi',
+            render: function(data, type, row, meta) {
+                return '<a href="/dashboard/member/'+ row['id'] +'" onclick="confirmDelete(event, \'#vanisher\');" class="text-left btn btn-danger px-3 rounded-0 btn-sm">Hapus<i class="bi bi-trash3 ms-2"></i></a>';
+            }
+        }
 	]
 });
 
@@ -606,6 +606,7 @@ $('#assessmentTable').DataTable({
     }
 });
 
+if (document.querySelector('#evaluationTable')) {
 let evaluationTable = $('#evaluationTable').DataTable({
     ajax: {
         url: '/server/fetch/evaluations',
@@ -744,6 +745,7 @@ new $.fn.dataTable.Buttons(evaluationTable, {
 });
 
 evaluationTable.buttons().container().appendTo($('#buttons', evaluationTable.table().container()));
+}
 
 $('#evaluationHistoryTable').DataTable({
     ajax: {

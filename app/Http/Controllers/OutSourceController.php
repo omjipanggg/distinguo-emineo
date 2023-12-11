@@ -87,10 +87,14 @@ class OutSourceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Evaluatee $evaluatee)
+    public function edit(string $id)
     {
-        $context = [];
-        return view('pages.dashboard.member.from.edit', $context);
+        $evaluatee = Evaluatee::find($id);
+
+        $context = [
+            'evaluatee' => $evaluatee
+        ];
+        return view('pages.dashboard.member.form.edit', $context);
     }
 
     /**
