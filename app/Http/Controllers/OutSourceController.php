@@ -89,7 +89,8 @@ class OutSourceController extends Controller
      */
     public function edit(Evaluatee $evaluatee)
     {
-        //
+        $context = [];
+        return view('pages.dashboard.member.from.edit', $context);
     }
 
     /**
@@ -97,14 +98,24 @@ class OutSourceController extends Controller
      */
     public function update(Request $request, Evaluatee $evaluatee)
     {
-        //
+        alert()->success('Sukses', 'Data berhasil diubah.');
+        return redirect()->back()->with([
+            'code' => 200,
+            'message' => 'Data berhasil diubah.'
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Evaluatee $evaluatee)
+    public function destroy(string $id)
     {
-        //
+        Evaluatee::find($id)->delete();
+
+        alert()->success('Sukses', 'Data dihapus.');
+        return redirect()->back()->with([
+            'code' => 200,
+            'message' => 'Data dihapus.'
+        ]);
     }
 }

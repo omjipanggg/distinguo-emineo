@@ -13,7 +13,9 @@ class Project extends Model
     protected $table = 'projects';
     protected $guarded = [];
 
-    protected $casts = [];
+    protected $casts = [
+    	'project_number' => 'string'
+    ];
 
     public function tokenisers() {
         return $this->belongsToMany(Tokeniser::class, 'pivot_projects_tokenisers');

@@ -12,7 +12,13 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">Evaluasi</div>
+                <div class="card-header">
+                    <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between">
+                    @yield('title')
+
+                    <div id="buttons"></div>
+                    </div>
+                </div>
 
                 <div class="card-body">
                     <div class="table-responsive">

@@ -174,7 +174,7 @@ class EvaluationController extends Controller
     public function show(Request $request, string $batch)
     {
         $evaluatee = Evaluatee::find($request->evaluatee_id);
-        $evaluation = Evaluation::where('batch', $batch)->with(['criteria.type', 'evaluatee.departments', 'evaluator'])->get();
+        $evaluation = Evaluation::where('batch', $batch)->with(['criteria.type', 'evaluatee.departments', 'evaluator'])->orderBy('critera_id')->get();
 
         $context = [
             'evaluatee' => $evaluatee,

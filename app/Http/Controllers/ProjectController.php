@@ -66,9 +66,9 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project)
+    public function destroy(string $id)
     {
-        $project->delete();
+        Project::find($id)->delete();
 
         alert()->success('Sukses', 'Data dihapus.');
         return redirect()->back()->with([

@@ -101,6 +101,19 @@ class ServerController extends Controller
 
     public function fetchEvaluation(Request $request) {
         $data = Evaluation::with(['criteria.type', 'evaluatee.departments', 'evaluator'])->where('criteria_id', 999)->latest()->get();
+
+        $sum_of_batches = Evaluation::select('batch')->selectRaw('SUM(remarks) as sum_of_remarks, COUNT(remarks) as total')->groupBy('batch')->get();
+
+        $data = $data->map(function($item) use($sum_of_batches) {
+            foreach ($sum_of_batches as $key => $value) {
+                if ($item['batch'] == $value['batch']) {
+                    $item['percentage'] = ($value['sum_of_remarks'] / 25) * 100;
+                    $item['stars'] = $value['total'];
+                    return $item;
+                }
+            }
+        });
+
         return DataTables::of($data)->make(true);
     }
 
