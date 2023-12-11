@@ -30,6 +30,7 @@ class OutSourceImport implements ShouldQueue, ToCollection, WithBatchInserts, Wi
     {
     	foreach ($collection as $row) {
             $card = $row['nik'];
+            $nopol = (string) $row['no_po'];
 
             Evaluatee::updateOrCreate([
                 'card_number' => $card
@@ -39,7 +40,7 @@ class OutSourceImport implements ShouldQueue, ToCollection, WithBatchInserts, Wi
                 'area' => $row['area'],
                 'region' => $row['regional'],
                 'zone' => $row['zona'],
-                'project_number' => $row['no_po']
+                'project_number' => $nopol
             ]);
 
             $snake = Str::snake($row['divisi']);
@@ -60,9 +61,9 @@ class OutSourceImport implements ShouldQueue, ToCollection, WithBatchInserts, Wi
             $user->departments()->attach($id);
 
             Project::updateOrCreate([
-                'project_number' => $row['no_po']
+                'project_number' => $nopol
             ], [
-                'project_number' => $row['no_po'],
+                'project_number' => $nopol,
                 'name' => $row['nama_project']
             ]);
     	}
