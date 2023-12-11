@@ -10,17 +10,13 @@
 			<div class="table-responsive w-100">
 				<table class="table table-bordered m-0 table-hover">
 					<tr>
-						<td class="fw-bold">ID Project</td>
+						<td class="fw-bold">No. PO</td>
 						<td class="text-code fw-bold">{{ $evaluatee->project->project_number }}</td>
 						<td class="text-code fw-bold">{{ Str::upper($evaluatee->project->name ?? 'null') }}</td>
 					</tr>
 					<tr>
-						<td>NIK</td>
-						<td colspan="2" class="text-code">{{ Str::upper($evaluatee->card_number ?? 'null') }}</td>
-					</tr>
-					<tr>
-						<td>Nama</td>
-						<td colspan="2" class="text-code">{{ Str::upper($evaluatee->name ?? 'null') }}</td>
+						<td>NIK/Nama</td>
+						<td colspan="2" class="text-code">{{ Str::upper($evaluatee->card_number ?? 'null') }} &mdash; {{ Str::upper($evaluatee->name ?? 'null') }}</td>
 					</tr>
 					<tr>
 						<td>Departemen/Divisi</td>
@@ -33,6 +29,17 @@
 				</table>
 			</div>
 
+		</div>
+	</div>
+
+	<div class="alert alert-warning mb-0 rounded-0" role="alert">
+		<div class="d-flex gap-3 align-items-center">
+		<i class="bi bi-info-circle"></i><strong>Keterangan:</strong>
+			<span class="text-decoration-underline">★ (Sangat kurang)</span>
+			<span class="text-decoration-underline">★★ (Kurang)</span>
+			<span class="text-decoration-underline">★★★ (Cukup)</span>
+			<span class="text-decoration-underline">★★★★ (Baik)</span>
+			<span class="text-decoration-underline">★★★★★ (Sangat baik)</span>
 		</div>
 	</div>
 

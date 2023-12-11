@@ -745,7 +745,7 @@ $('#evaluationHistoryTable').DataTable({
             data: null,
             title: 'Aksi',
             render: function(data, type, row, meta) {
-                return '<a href="/evaluation/'+ row['batch'] +'?token='+ row['evaluator']['token'] +'&evaluatee_id='+ row['evaluatee']['id'] +'" data-bs-target="#modalPlain" data-bs-toggle="modal" data-bs-table="Evaluation" data-bs-type="Detail" data-bs-footer="'+ row['evaluatee']['id'] +'" class="text-left btn btn-secondary px-3 rounded-0 btn-sm">Rincian<i class="bi bi-box-arrow-up-right ms-2"></i></a><a href="/evaluation/'+ row['batch'] +'/edit?token='+ row['evaluator']['token'] +'&evaluatee_id='+ row['evaluatee']['id'] +'" data-bs-toggle="modal" data-bs-target="#modalControl" data-bs-table="Evaluation" data-bs-type="Edit" class="text-left btn btn-dark px-3 rounded-0 btn-sm mx-2">Ubah<i class="bi bi-pencil-square ms-2"></i></a><a href="/evaluation/'+ row['id'] +'" onclick="confirmDelete(event, \'#vanisher\');" class="text-left btn btn-danger px-3 rounded-0 btn-sm">Hapus<i class="bi bi-trash3 ms-2"></i></a>';
+                return '<a href="/evaluation/'+ row['batch'] +'/edit?token='+ row['evaluator']['token'] +'&evaluatee_id='+ row['evaluatee']['id'] +'" data-bs-toggle="modal" data-bs-target="#modalControl" data-bs-table="Evaluation" data-bs-type="Edit" class="text-left btn btn-secondary px-3 rounded-0 btn-sm me-2">Rincian<i class="bi bi-box-arrow-up-right ms-2"></i></a><a href="/evaluation/'+ row['id'] +'" onclick="confirmDelete(event, \'#vanisher\');" class="text-left btn btn-danger px-3 rounded-0 btn-sm">Hapus<i class="bi bi-trash3 ms-2"></i></a>';
             },
             orderable: false,
             searchable: false
@@ -756,6 +756,10 @@ $('#evaluationHistoryTable').DataTable({
             render: function(data, type, row, meta) {
                 return dateTimeIndoFormat(data);
             }
+        },
+        {
+            data: 'evaluatee.project_number',
+            title: 'No. PO'
         },
         {
             data: 'evaluatee.card_number',
@@ -805,8 +809,14 @@ $('#evaluationHistoryTable').DataTable({
         },
         */
         {
-            data: 'evaluatee.project_number',
-            title: 'No. PO'
+            data: 'percentage',
+            title: '%',
+            render: function(data, type, row, meta) {
+                if (data == null || data == '' || data == 0) {
+                    return '0';
+                }
+                return Math.round(data);
+            }
         },
         {
             data: 'remarks',
