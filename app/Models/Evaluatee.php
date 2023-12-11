@@ -16,7 +16,8 @@ class Evaluatee extends Model
     protected $guarded = [];
 
     protected $casts = [
-    	'id' => 'string'
+    	'id' => 'string',
+        'project_number' => 'string'
     ];
 
     public function departments() {
