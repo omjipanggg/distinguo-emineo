@@ -17,7 +17,7 @@ class DashboardController extends Controller
 
     public function index() {
         $evaluatee = Evaluatee::count();
-        $evaluation = Evaluation::count();
+        $evaluation = Evaluation::where('criteria_id', 999)->count();
         $evaluator = Evaluator::count();
         $project = Project::count();
 
