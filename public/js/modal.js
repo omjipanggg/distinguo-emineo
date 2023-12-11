@@ -81,8 +81,7 @@ if (modalControl) {
 
         		if (document.querySelector('.rating')) {
                     let stars = new StarRating('.rating', {
-                        clearable: true,
-                        tooltip: false
+                        clearable: true
                     });
         		}
             },

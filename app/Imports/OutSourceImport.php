@@ -56,7 +56,8 @@ class OutSourceImport implements ShouldQueue, ToCollection, WithBatchInserts, Wi
             }
 
             $user = Evaluatee::where('card_number', $card)->first();
-            $user->departments()->sync([$id]);
+            $user->departments()->detach();
+            $user->departments()->attach($id);
 
             Project::updateOrCreate([
                 'project_number' => $row['no_po']
