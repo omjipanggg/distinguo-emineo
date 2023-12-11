@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Evaluatee;
 use App\Models\Project;
 
 use Illuminate\Http\Request;
@@ -50,17 +51,30 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Project $project)
+    public function edit(string $id)
     {
-        //
+        $project = Project::find($id);
+
+        $context = [
+            'project' => $project
+        ];
+
+        return view('pages.dashboard.project.form.edit', $context);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, string $id)
     {
-        //
+        Evaluatee::where('project_number', $request->old_no_po)->update(['project_number' => $request->no_po]);
+        Project::find($id)->update(['project_number' => $request->no_po, 'name' => $request->name]);
+
+        alert()->success('Sukses', 'Data berhasil diubah.');
+        return redirect()->back()->with([
+            'code' => 200,
+            'message' => 'Data berhasil diubah.'
+        ]);
     }
 
     /**

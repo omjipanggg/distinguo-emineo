@@ -101,6 +101,7 @@ $('#scoringTable').DataTable({
         $('.dataTables_wrapper > .row:last-child').addClass('mt-2');
     },
     order: [
+        [4, 'asc'],
         [2, 'asc']
     ],
     columns: [
@@ -441,7 +442,7 @@ $('#projectTable').DataTable({
                 if (data == null || data == '') {
                     return '<em>null</em>';
                 }
-                return data;
+                return truncateText(data, 32);
             }
         },
         /*
@@ -465,13 +466,20 @@ $('#projectTable').DataTable({
                 }
                 return '<strong>' + data + '</strong> Peserta';
             }
+        },
+        {
+            data: null,
+            title: 'Aksi',
+            render: function(data, type, row, meta) {
+                return '<a href="/dashboard/project/'+ row['id'] +'/edit" data-bs-toggle="modal" data-bs-target="#modalControl" data-bs-table="Project" data-bs-type="Edit" class="text-left btn btn-dark rounded-0 btn-sm px-3">Ubah<i class="bi bi-pencil-square ms-2"></i></a>';
+            }
         }
     ],
     createdRow: function(row, data, index) {
         if (data.deleted_at) {
             $(row).addClass('deleted');
         }
-        $(row).find('td:eq(2)').attr('title', data.description);
+        $(row).find('td:eq(1)').attr('title', data.name);
     }
 });
 

@@ -16,18 +16,6 @@ Breadcrumbs::for('evaluator.lounge', function (BreadcrumbTrail $trail, Tokeniser
 });
 
 // Dashboard
-Breadcrumbs::for('evaluation.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard.index');
-    $trail->push('Evaluasi', route('evaluation.index'));
-});
-
-// Dashboard > Score
-Breadcrumbs::for('evaluation.score', function (BreadcrumbTrail $trail) {
-    $trail->parent('evaluation.index');
-    $trail->push('Penilaian: Data', route('evaluation.score'));
-});
-
-// Dashboard
 Breadcrumbs::for('dashboard.index', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('dashboard.index'));
 });
@@ -92,10 +80,28 @@ Breadcrumbs::for('member.index', function (BreadcrumbTrail $trail) {
     $trail->push('Peserta', route('member.index'));
 });
 
+// Dashboard
+Breadcrumbs::for('evaluation.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard.index');
+    $trail->push('Evaluasi', route('evaluation.index'));
+});
+
+// Dashboard > Penilaian
+Breadcrumbs::for('evaluation.assessment', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard.index');
+    $trail->push('Penilaian', null);
+});
+
+// Dashboard > Score
+Breadcrumbs::for('evaluation.score', function (BreadcrumbTrail $trail) {
+    $trail->parent('evaluation.assessment');
+    $trail->push('Data', route('evaluation.score'));
+});
+
 // Dashboard > History
 Breadcrumbs::for('evaluation.history', function (BreadcrumbTrail $trail) {
-    $trail->parent('evaluation.index');
-    $trail->push('Penilaian: Riwayat', route('evaluation.history'));
+    $trail->parent('evaluation.assessment');
+    $trail->push('Riwayat', route('evaluation.history'));
 });
 
 // Home > Blog > [Category]

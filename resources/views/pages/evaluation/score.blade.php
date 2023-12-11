@@ -1,5 +1,5 @@
 @extends('layouts.panel')
-@section('title', 'Penilaian: Data')
+@section('title', 'Penilaian/Data')
 
 @section('content')
 <div class="container-fluid px-12">

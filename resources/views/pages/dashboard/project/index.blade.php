@@ -24,7 +24,7 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover table-striped align-top" id="projectTable"></table>
+                        <table class="table table-bordered table-hover table-striped" id="projectTable"></table>
                     </div>
                 </div>
 

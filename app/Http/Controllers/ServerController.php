@@ -161,7 +161,7 @@ class ServerController extends Controller
     }
 
     public function fetchProjects(Request $request) {
-        $data = Project::leftJoin('evaluatees', 'evaluatees.project_number', '=', 'projects.project_number')->select('projects.project_number', 'projects.name', 'projects.description')->selectRaw('COUNT(evaluatees.id) as total')->groupBy('projects.project_number', 'projects.name', 'projects.description')->orderBy('projects.project_number')->get();
+        $data = Project::leftJoin('evaluatees', 'evaluatees.project_number', '=', 'projects.project_number')->select('projects.id', 'projects.project_number', 'projects.name', 'projects.description')->selectRaw('COUNT(evaluatees.id) as total')->groupBy('projects.id', 'projects.project_number', 'projects.name', 'projects.description')->orderBy('projects.project_number')->get();
         return DataTables::of($data)->make(true);
     }
 
