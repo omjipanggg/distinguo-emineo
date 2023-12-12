@@ -171,7 +171,7 @@ class ServerController extends Controller
     }
 
     public function fetchTokens(Request $request) {
-    	$data = Tokeniser::with(['evaluator', 'projects'])->latest()->get();
+    	$data = Tokeniser::with(['evaluator', 'project'])->latest()->get();
     	return DataTables::of($data)->make(true);
     }
 

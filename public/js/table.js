@@ -234,18 +234,32 @@ $('#tokenTable').DataTable({
             }
         },
         {
-            data: 'projects',
+            data: 'project.project_number',
             title: 'No. PO',
             render: function(data, type, row, meta) {
                 if (!data.length) {
                     return '<em>null</em>';
                 }
 
+                return '<strong>' + data + '</strong>';
+                /*
                 return data.map((item) => {
                     let pad = '';
                     if (data.length > 1) { pad = 'me-1'; }
                     return '<strong>[' + item.project_number + ']</strong> ' + truncateText(item.name, 24);
                 }).join('<br>');
+                */
+            }
+        },
+        {
+            data: 'project.name',
+            title: 'Nama Project',
+            render: function(data, type, row, meta) {
+                if (!data.length) {
+                    return '<em>null</em>';
+                }
+
+                return truncateText(data, 24);
             }
         },
         /*
@@ -282,7 +296,13 @@ $('#tokenTable').DataTable({
                 return '<a href="/dashboard/token/'+ row['id'] +'" onclick="confirmDelete(event, \'#vanisher\');" class="text-left btn btn-danger px-3 rounded-0 btn-sm">Hapus<i class="bi bi-trash3 ms-2"></i></a>';
             }
         }
-	]
+	],
+    createdRow: function(row, data, index) {
+        if (data.deleted_at) {
+            $(row).addClass('deleted');
+        }
+        $(row).find('td:eq(4)').attr('title', data.project.name);
+    }
 });
 
 $('#memberTable').DataTable({
