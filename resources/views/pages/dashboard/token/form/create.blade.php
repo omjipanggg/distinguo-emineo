@@ -19,7 +19,8 @@
 	<div class="mb-2"></div>
 
 	<div class="form-select-floating">
-		<select name="projects[]" id="projects" class="form-select select2-single-modal" multiple="" required="" data-bs-table="projects">
+		<select name="projects[]" id="projects" class="form-select select2-single-modal" required="" data-bs-table="projects">
+			<option value="" selected="" disabled="">Pilih satu</option>
 			@foreach ($projects as $project)
 			<option value="{{ $project->id }}">{{ $project->project_number }} | {{ Str::upper($project->name ?? 'null') }}</option>
 			@endforeach

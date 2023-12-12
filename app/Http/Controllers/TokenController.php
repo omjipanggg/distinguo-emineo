@@ -51,7 +51,12 @@ class TokenController extends Controller
 
     public function store(Request $request)
     {
-        $token = Tokeniser::create(['token' => $request->input('token')]);
+        $po = Project::find($request->input('projects')[0])->project_number;
+
+        $token = Tokeniser::create([
+            'token' => $request->input('token'),
+            'project_number' => $po
+        ]);
 
         $token->projects()->syncWithPivotValues($request->input('projects'), [
             'assessment_id' => $request->assessment_id
