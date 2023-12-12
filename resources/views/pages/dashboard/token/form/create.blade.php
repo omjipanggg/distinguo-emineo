@@ -12,7 +12,7 @@
 	<div class="mb-2"></div>
 
 	<div class="form-floating">
-		<input type="text" class="form-control" autocomplete="off" placeholder="Nama Penilai" name="name" id="nameOnModal">
+		<input type="text" class="form-control" autocomplete="off" placeholder="Nama Penilai" name="name" id="nameOnModal" required="">
 		<label for="nameOnModal">Nama Penilai</label>
 	</div>
 
