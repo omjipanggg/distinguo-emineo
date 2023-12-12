@@ -12,7 +12,16 @@
     <div class="row g-4">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">Kriteria</div>
+                <div class="card-header">
+                    <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between">
+                        @yield('title')
+
+                        <a href="{{ route('criteria.create') }}" class="btn btn-primary px-3 rounded-1" data-bs-toggle="modal" data-bs-target="#modalControl" data-bs-table="Criteria" data-bs-type="Add">
+                            Tambah
+                            <i class="bi bi-plus-square-dotted ms-1"></i>
+                        </a>
+                    </div>
+                </div>
 
                 <div class="card-body">
 

@@ -317,10 +317,12 @@ table.align-top td {
 }
 
 /* CARD ===================================================================== */
+ol.breadcrumb,
 .card.animated {
     transition: all 160ms ease-in;
 }
 
+ol.breadcrumb:hover,
 .card.animated:hover {
     transform: translateY(-4px);
     box-shadow: 0 .5em var(--shadow-color) !important;

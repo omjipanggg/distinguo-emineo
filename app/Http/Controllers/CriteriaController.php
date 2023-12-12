@@ -48,7 +48,7 @@ class CriteriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.dashboard.criteria.form.create');
     }
 
     /**
@@ -56,7 +56,13 @@ class CriteriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Criteria::create($request->all());
+
+        alert()->success('Sukses', 'Data berhasil ditambahkan.');
+        return redirect()->back()->with([
+            'code' => 200,
+            'message' => 'Data berhasil ditambahkan.'
+        ]);
     }
 
     /**
