@@ -201,8 +201,7 @@ $('#tokenTable').DataTable({
     },
     order: [
         [0, 'asc'],
-        [2, 'asc'],
-        [3, 'desc']
+        [6, 'desc']
     ],
     columns: [
         {
@@ -290,11 +289,13 @@ $('#tokenTable').DataTable({
     		}
 	    },
         {
-            data: null,
+            data: 'created_at',
             title: 'Aksi',
             render: function(data, type, row, meta) {
                 return '<a href="/dashboard/token/'+ row['id'] +'" onclick="confirmDelete(event, \'#vanisher\');" class="text-left btn btn-danger px-3 rounded-0 btn-sm">Hapus<i class="bi bi-trash3 ms-2"></i></a>';
-            }
+            },
+            orderable: false,
+            searchable: false
         }
 	],
     createdRow: function(row, data, index) {
