@@ -201,7 +201,8 @@ $('#tokenTable').DataTable({
     },
     order: [
         [0, 'asc'],
-        [6, 'desc']
+        [6, 'desc'],
+        [5, 'desc']
     ],
     columns: [
         {
