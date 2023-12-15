@@ -29,6 +29,7 @@ class ServerController extends Controller
         dd($request->all());
     }
 
+    /*
     public function fetchByTable(Request $request, string $table) {
     	if (Schema::hasTable($table)) {
     	    $data = DB::table($table)->whereNull('deleted_at');
@@ -39,6 +40,7 @@ class ServerController extends Controller
     	} else { $data = []; }
 	    return DataTables::of($data)->make(true);
     }
+    */
 
     public function checkToken(Request $request) {
         $token = $request->token;
@@ -100,19 +102,41 @@ class ServerController extends Controller
     }
 
     public function fetchEvaluation(Request $request) {
-        $data = Evaluation::with(['criteria.type', 'evaluatee.departments', 'evaluator'])->where('criteria_id', 999)->latest()->get();
+        $data = Evaluation::with(['criteria.type', 'evaluatee', 'evaluator'])
+        ->where('criteria_id', 999)
+        ->latest()->orderByDesc('batch')->get();
 
-        $sum_of_batches = Evaluation::select('batch')->selectRaw('SUM(remarks) as sum_of_remarks, COUNT(remarks) as total')->groupBy('batch')->get();
+        $sum_of_batches = Evaluation::join('criterias', 'criterias.id', '=', 'evaluations.criteria_id')->join('criteria_types', 'criteria_types.id', '=', 'criterias.criteria_type_id')->select('evaluations.batch')->selectRaw('SUM(evaluations.remarks) as sum_of_remarks, COUNT(CASE WHEN criteria_types.id = 1 THEN 1 END) as total')->groupBy('batch')->get();
+
+        $rest_of_scores = Evaluation::select('remarks', 'criteria_id', 'batch')
+        ->where('criteria_id', '<>', 999)
+        ->latest()->orderByDesc('batch')->get();
 
         $data = $data->map(function($item) use($sum_of_batches) {
             foreach ($sum_of_batches as $key => $value) {
                 if ($item['batch'] == $value['batch']) {
-                    $item['percentage'] = ($value['sum_of_remarks'] / 25) * 100;
+                    $item['percentage'] = ($value['sum_of_remarks'] / ($value['total'] * 5)) * 100;
                     $item['stars'] = $value['total'];
                     return $item;
                 }
+
             }
         });
+
+        foreach ($data as $key => $value) {
+            $grouped = [];
+            foreach ($rest_of_scores as $rest_key => $rest_value) {
+                if ($value['batch'] == $rest_value['batch']) {
+                    if (is_numeric($rest_value['remarks'])) {
+                        $grouped[] = [
+                            'other_id' => $rest_value['criteria_id'],
+                            'other_remarks' => $rest_value['remarks']
+                        ];
+                    }
+                }
+            }
+            $value['others'] = $grouped;
+        }
 
         return DataTables::of($data)->make(true);
     }

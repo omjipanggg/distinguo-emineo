@@ -639,7 +639,7 @@ $('#assessmentTable').DataTable({
 if (document.querySelector('#evaluationTable')) {
 let evaluationTable = $('#evaluationTable').DataTable({
     ajax: {
-        url: '/server/fetch/evaluations',
+        url: '/server/fetch/evaluations'
     },
     processing: true,
     serverSide: true,
@@ -647,6 +647,7 @@ let evaluationTable = $('#evaluationTable').DataTable({
     scrollCollapse: true,
     scrollY: true,
     scrollX: true,
+    lengthMenu: [ [10, 25, 50, 100, -1], ['10', '25', '50', '100', 'All'] ],
     language: {
         url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
         paginate: {
@@ -682,7 +683,7 @@ let evaluationTable = $('#evaluationTable').DataTable({
             data: 'created_at',
             title: 'Tgl. Penilaian',
             render: function(data, type, row, meta) {
-                return dateTimeIndoFormat(data);
+                return '<span class="text-code">' + dateTimeIndoFormat(data).toUpperCase() + '</span>';
             }
         },
         {
@@ -715,6 +716,24 @@ let evaluationTable = $('#evaluationTable').DataTable({
                 return data.toUpperCase();
             }
         },
+        /*
+        {
+            data: 'others',
+            title: 'Kriteria',
+            render: function(data, type, row, meta) {
+                if (!data.length) {
+                    return '<em>null</em>';
+                }
+
+                return data.map((item) => {
+                    let pad = '';
+                    if (data.length > 1) { pad = 'me-1'; }
+                    return '<span class="text-code">Q' + item.other_id + ': ' + item.other_remarks + '</span>';
+                }).join('<span class="me-2">,</span>');
+            }
+        },
+        */
+        ...columnDefs,
         {
             data: 'percentage',
             title: '%',
@@ -749,6 +768,8 @@ let evaluationTable = $('#evaluationTable').DataTable({
         if (data.deleted_at) {
             $(row).addClass('deleted');
         }
+        $('#evaluationTable_wrapper').find('th:eq(0)').addClass('excluded');
+        $(row).find('td.scale').addClass('text-center');
     }
 });
 
@@ -759,17 +780,32 @@ new $.fn.dataTable.Buttons(evaluationTable, {
             split: [
                 {
                     extend: 'excel',
-                    text: 'Export as Excel'
+                    text: 'Export as Excel',
+                    exportOptions: {
+                        columns: ':not(.excluded)'
+                    },
+                    footer: true
                 },
                 {
                     extend: 'pdf',
-                    text: 'Export as PDF'
+                    text: 'Export as PDF',
+                    exportOptions: {
+                        columns: ':not(.excluded)'
+                    },
+                    footer: true
                 }
             ]
         },
         {
             extend: 'print',
-            text: '<i class="bi bi-printer"></i>'
+            text: '<i class="bi bi-printer"></i>',
+            exportOptions: {
+                columns: ':not(.excluded)'
+            },
+            customize: function (csv) {
+                return 'Text: ' + csv;
+            },
+            footer: true
         }
     ]
 });

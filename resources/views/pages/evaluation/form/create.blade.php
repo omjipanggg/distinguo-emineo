@@ -73,7 +73,7 @@
 					<div class="fw-bold mb-3">{{ $loop->iteration }}. {{ $point->name }}</div>
 					<div class="text-justify">{{ $point->description }}</div>
 
-					<textarea name="remarks-{{ $point->id }}" id="remarks-{{ $point->id }}" class="form-control" required="" placeholder="Remarks" cols="30" rows="10"></textarea>
+					<textarea name="remarks-{{ $point->id }}" id="remarks-{{ $point->id }}" class="form-control" placeholder="Remarks" cols="30" rows="10"></textarea>
 				</div>
 				@endif
 			</div>

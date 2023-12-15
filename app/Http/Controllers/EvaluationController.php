@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assessment;
+use App\Models\Criteria;
 use App\Models\Evaluatee;
 use App\Models\Evaluation;
 use App\Models\Evaluator;
@@ -16,16 +17,50 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class EvaluationController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $queries = null;
+        $criterias = Criteria::where([
+            ['id', '<>', 6],
+            ['id', '<>', 7],
+            ['id', '<>', 999]
+        ])->get();
 
-        if ($request->has('token')) {
-            $queries = $request->all();
+        $columns = [];
+
+        $data = Evaluation::with(['criteria.type', 'evaluatee', 'evaluator'])
+        ->where('criteria_id', 999)
+        ->latest()->orderByDesc('batch')->get();
+
+        $rest_of_scores = Evaluation::select('remarks', 'criteria_id', 'batch')
+        ->where('criteria_id', '<>', 999)
+        ->latest()->orderByDesc('batch')->get();
+
+        foreach ($data as $key => $value) {
+            $grouped = [];
+            foreach ($rest_of_scores as $rest_key => $rest_value) {
+                if ($value['batch'] == $rest_value['batch']) {
+                    if (is_numeric($rest_value['remarks'])) {
+                        $grouped[] = [
+                            'other_id' => $rest_value['criteria_id'],
+                            'other_remarks' => $rest_value['remarks']
+                        ];
+                    }
+                }
+            }
+            $value['others'] = $grouped;
+        }
+
+        foreach ($grouped as $value) {
+            $columns[] = [
+                'data' => 'others',
+                'title' => 'Q' . $value['other_id'],
+                'id' => $value['other_id']
+            ];
         }
 
         $context = [
-            'queries' => $queries
+            'columns' => $columns,
+            'criterias' => $criterias
         ];
 
         return view('pages.evaluation.index', $context);

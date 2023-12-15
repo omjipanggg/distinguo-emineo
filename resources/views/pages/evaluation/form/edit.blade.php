@@ -52,7 +52,7 @@
 									<option value="Belum direkomendasikan" @if($score->remarks == 'Belum direkomendasikan') selected="" @endif>Belum direkomendasikan</option>
 								</select>
 							@else
-								<input type="text" class="form-control rounded-1" required="" placeholder="{{ $score->remarks }}" value="{{ $score->remarks }}" autocomplete="off" name="remarks-{{ $score->id }}" id="remarks-{{ $score->id }}">
+								<input type="text" class="form-control rounded-1" placeholder="{{ $score->remarks ?? $score->criteria->name }}" value="{{ $score->remarks }}" autocomplete="off" name="remarks-{{ $score->id }}" id="remarks-{{ $score->id }}">
 							@endif
 						@endif
 

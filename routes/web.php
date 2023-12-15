@@ -103,5 +103,5 @@ Route::prefix('server')->group(function() {
 	Route::get('fetch/scores', [Server::class, 'fetchScores'])->name('server.fetchScores');
 	Route::get('fetch/tokens', [Server::class, 'fetchTokens'])->name('server.fetchTokens');
 	Route::get('fetch/users', [Server::class, 'fetchUsers'])->name('server.fetchUsers');
-	Route::get('fetch/{table}', [Server::class, 'fetchByTable'])->name('server.fetchByTable');
+	// Route::get('fetch/{table}', [Server::class, 'fetchByTable'])->name('server.fetchByTable');
 });
