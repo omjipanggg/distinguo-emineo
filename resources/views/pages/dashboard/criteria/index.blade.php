@@ -36,7 +36,7 @@
                                     <input type="file" name="file" id="file" class="form-control" autocomplete="off" required="" accept="text/csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
                                 </div>
 
-                                <button type="submit" class="btn btn-primary rounded-0" data-bs-text="Importing" data-bs-initial-text="Import" data-bs-icon="upload">Import<i class="bi bi-upload ms-2"></i></button>
+                                <button type="submit" class="btn btn-primary rounded-1 px-3" data-bs-text="Importing" data-bs-initial-text="Import" data-bs-icon="upload">Import<i class="bi bi-upload ms-2"></i></button>
                             </div>
                         </form>
                     </div>

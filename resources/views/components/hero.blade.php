@@ -30,7 +30,7 @@
             </div>
           </div>
 
-          <button type="submit" class="btn btn-primary rounded-0 px-5" data-bs-text="Submitting" data-bs-initial-text="Submit" id="btnCheckToken">Submit<i class="bi bi-send ms-2"></i></button>
+          <button type="submit" class="btn btn-primary rounded-1 px-5" data-bs-text="Submitting" data-bs-initial-text="Submit" id="btnCheckToken">Submit<i class="bi bi-send ms-2"></i></button>
         </div>
 
       </form>

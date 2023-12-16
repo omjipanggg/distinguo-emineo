@@ -210,9 +210,12 @@ $('#tokenTable').DataTable({
 	    	title: 'Status',
     		render: function(data, type, row, meta) {
     			if (data) {
-    				return '<span class="badge text-bg-success rounded-0"><i class="bi bi-check-circle me-2"></i>Used</em>';
+                    if (row['evaluator']['evaluations_count']) {
+                        return '<span class="badge text-bg-success rounded-0 me-2"><i class="bi bi-check-circle me-2"></i>Sudah dibagikan</span><span class="badge text-bg-info rounded-0"><i class="bi bi-check-circle me-2"></i>Sudah menilai</span>';
+                    }
+        			return '<span class="badge text-bg-success rounded-0 me-2"><i class="bi bi-check-circle me-2"></i>Sudah dibagikan</span><span class="badge text-bg-warning rounded-0"><i class="bi bi-question-circle me-2"></i>Belum menilai</span>';
     			} else {
-    				return '<span class="badge text-bg-dark rounded-0"><i class="bi bi-question-circle me-2"></i>Unused</em>';
+                    return '<span class="badge text-bg-dark rounded-0 me-2"><i class="bi bi-question-circle me-2"></i>Belum dibagikan</span><span class="badge text-bg-warning rounded-0"><i class="bi bi-question-circle me-2"></i>Belum menilai</span>';
     			}
     		}
 	    },
@@ -293,7 +296,7 @@ $('#tokenTable').DataTable({
             data: 'created_at',
             title: 'Aksi',
             render: function(data, type, row, meta) {
-                return '<a href="/dashboard/token/'+ row['id'] +'" onclick="confirmDelete(event, \'#vanisher\');" class="text-left btn btn-danger px-3 rounded-0 btn-sm">Hapus<i class="bi bi-trash3 ms-2"></i></a>';
+                return '<a href="/dashboard/token/'+ row['id'] +'" onclick="confirmDelete(event, \'#vanisher\');" class="text-left btn btn-sm btn-danger px-3 rounded-0 btn-sm">Hapus<i class="bi bi-trash3 ms-2"></i></a>';
             },
             orderable: false,
             searchable: false

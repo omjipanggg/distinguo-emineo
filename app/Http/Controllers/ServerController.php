@@ -195,7 +195,10 @@ class ServerController extends Controller
     }
 
     public function fetchTokens(Request $request) {
-    	$data = Tokeniser::with(['evaluator', 'project'])->latest()->get();
+    	$data = Tokeniser::with(['evaluator' => function($query) {
+            return $query->withCount('evaluations');
+        }])->with(['project'])->latest()->get();
+
     	return DataTables::of($data)->make(true);
     }
 
