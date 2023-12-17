@@ -79,7 +79,7 @@ class ServerController extends Controller
         $data = [];
         $project_numbers = Tokeniser::join('pivot_projects_tokenisers', 'pivot_projects_tokenisers.tokeniser_id', '=', 'tokenisers.id')->join('projects', 'projects.id', '=', 'pivot_projects_tokenisers.project_id')->with('projects')->where('token', $token)->whereHas('evaluator')->pluck('projects.project_number');
 
-        $data = Evaluatee::whereIn('project_number', $project_numbers)->whereDoesntHave('evaluations.evaluator', function($query) use($token) {
+        $data = Evaluatee::whereDoesntHave('evaluations.evaluator', function($query) use($token) {
                 return $query->where('token', $token);
             })->with(['departments', 'evaluations.evaluator']);
 
@@ -94,6 +94,8 @@ class ServerController extends Controller
                 });
             }
             */
+        } else {
+            $data = $data->whereIn('project_number', $project_numbers);
         }
 
         $data = $data->get();
@@ -156,7 +158,9 @@ class ServerController extends Controller
 
         if ($request->has('department')) {
             $department = $request->department;
-            $data = $data->where('project_number', $department);
+            $data = $data->whereHas('evaluatee', function($query) use($department) {
+                return $query->where('project_number', $department);
+            });
 
             /*
             if ($department != 'all') {
