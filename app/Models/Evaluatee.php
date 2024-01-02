@@ -31,4 +31,8 @@ class Evaluatee extends Model
     public function project() {
         return $this->belongsTo(Project::class, 'project_number', 'project_number');
     }
+
+    public function tokens() {
+        return $this->belongsToMany(Tokeniser::class, 'pivot_evaluatees_tokenisers')->orderBy('evaluatees.name');
+    }
 }

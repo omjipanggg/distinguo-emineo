@@ -87,6 +87,19 @@ $(document).ready(function() {
         }, 2048);
     }
 
+    $(document).on('change', '#projectsOnToken', function(event) {
+        let projectId = $(this).val();
+
+        $.get('/server/select/evaluatees/project/' + projectId, function(data) {
+            $('#evaluateesOnToken').empty();
+            $('#evaluateesOnToken').append(new Option('PILIH SEMUA', '0', false, false));
+            $.each(data, function(id, text) {
+                $('#evaluateesOnToken').append(new Option(text.card_number + '—' + (text.name.toUpperCase() || 'NULL'), text.id, false, false));
+            });
+            $('#evaluateesOnToken').trigger('change');
+        });
+    });
+
     $('#btnCheckToken').click(function(event) {
         event.preventDefault();
         let token = $('#token').val();

@@ -58,14 +58,28 @@ class TokenController extends Controller
             'project_number' => $po
         ]);
 
-        $token->projects()->syncWithPivotValues($request->input('projects'), [
-            'assessment_id' => $request->assessment_id
-        ]);
+        $token->projects()->syncWithPivotValues(
+            $request->input('projects'), [
+                'assessment_id' => $request->assessment_id
+            ]
+        );
 
         $evaluator = Evaluator::create([
             'name' => $request->input('name'),
             'token' => $request->input('token')
         ]);
+
+        if (in_array(0, $request->evaluatees)) {
+            $evaluatees = Evaluatee::where('project_number', $po)->get();
+            foreach ($evaluatees as $key => $eval) {
+                $eval->tokens()->attach($token->id);
+            }
+        } else {
+            $evaluatees = Evaluatee::whereIn('id', $request->evaluatees)->get();
+            foreach ($evaluatees as $key => $eval) {
+                $eval->tokens()->attach($token->id);
+            }
+        }
 
         alert()->success('Sukses', 'Token baru berhasil dibuat.');
         return redirect()->back()->with([

@@ -68,6 +68,13 @@ class ServerController extends Controller
         return response()->json($data);
     }
 
+    public function selectEvaluateesByProject(Request $request, string $id) {
+        $project = Project::find($id);
+
+        $data = DB::table('evaluatees')->select('id', 'name', 'card_number')->where('project_number', $project->project_number)->orderBy('name')->groupBy('id', 'name', 'card_number')->whereNull('deleted_at')->get();
+        return response()->json($data);
+    }
+
     public function fetchCriterias(Request $request) {
         $data = Criteria::orderBy('name')->where('id', '<>', 999)->with(['type'])->get();
         return DataTables::of($data)->make(true);
@@ -75,18 +82,25 @@ class ServerController extends Controller
 
     public function fetchScores(Request $request) {
         $token = $request->input('token') ?? null;
+        $batch = $request->input('batch') ?? null;
+
+        $tokenId = null;
+        if ($token) {
+            $tokenId = Tokeniser::where('token', $token)->first()->id;
+        }
 
         $data = [];
         $project_numbers = Tokeniser::join('pivot_projects_tokenisers', 'pivot_projects_tokenisers.tokeniser_id', '=', 'tokenisers.id')->join('projects', 'projects.id', '=', 'pivot_projects_tokenisers.project_id')->with('projects')->where('token', $token)->whereHas('evaluator')->pluck('projects.project_number');
 
         $data = Evaluatee::whereDoesntHave('evaluations.evaluator', function($query) use($token) {
                 return $query->where('token', $token);
+            })->whereHas('tokens', function($query) use($tokenId) {
+                return $query->where('tokeniser_id', $tokenId);
             })->with(['departments', 'evaluations.evaluator']);
 
         if ($request->filled('department')) {
             $department = $request->input('department');
             $data = $data->where('project_number', $department);
-
             /*
             if ($department != 'all') {
                 $data = $data->whereHas('departments', function($query) use($department) {
@@ -201,7 +215,7 @@ class ServerController extends Controller
     public function fetchTokens(Request $request) {
     	$data = Tokeniser::with(['evaluator' => function($query) {
             return $query->withCount('evaluations');
-        }])->with(['project'])->latest()->get();
+        }])->with(['project'])->withCount('evaluatees')->latest()->get();
 
     	return DataTables::of($data)->make(true);
     }

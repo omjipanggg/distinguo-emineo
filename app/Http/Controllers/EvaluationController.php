@@ -35,6 +35,8 @@ class EvaluationController extends Controller
         ->where('criteria_id', '<>', 999)
         ->latest()->orderByDesc('batch')->get();
 
+        $grouped = [];
+
         foreach ($data as $key => $value) {
             $grouped = [];
             foreach ($rest_of_scores as $rest_key => $rest_value) {

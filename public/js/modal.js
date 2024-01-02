@@ -26,11 +26,12 @@ if (modalControl) {
                     let column = $(item).data('bsColumn') || 'name';
                     let selected = $(item).data('bsSelected') || null;
                     let multiple = $(item).data('bsMultiple') ? true : false;
+                    let placeholder = $(item).data('bsPlaceholder') || 'Pilih satu';
                     $(item).select2();
                     $(item).select2('destroy');
                     $(item).select2({
                         language: 'id',
-                        placeholder: 'Pilih satu',
+                        placeholder: placeholder,
                         theme: 'bootstrap-5',
                         width: '100%',
                         dropdownAutoWidth: true,

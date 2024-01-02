@@ -88,6 +88,8 @@ Route::resource('evaluator', Evaluator::class);
 
 /* SERVER ===================================================================== */
 Route::prefix('server')->group(function() {
+	Route::get('select/evaluatees/project/{project}', [Server::class, 'selectEvaluateesByProject'])->name('server.selectEvaluateesByProject');
+
 	Route::get('evaluator/store', [Server::class, 'storeEvaluator'])->name('server.storeEvaluator');
 	Route::get('evaluator/update', [Server::class, 'updateEvaluator'])->name('server.updateEvaluator');
 

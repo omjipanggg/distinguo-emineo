@@ -265,6 +265,16 @@ $('#tokenTable').DataTable({
                 return truncateText(data, 24);
             }
         },
+        {
+            data: 'evaluatees_count',
+            title: 'Total',
+            render: function(data, type, row, meta) {
+                if (data == 0 || data == null || data == '') {
+                    return '<strong>0</strong> Peserta';
+                }
+                return '<strong>' + data + '</strong> Peserta';
+            }
+        },
         /*
     	{
     		data: 'departments',

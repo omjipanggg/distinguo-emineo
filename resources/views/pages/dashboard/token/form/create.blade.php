@@ -4,28 +4,39 @@
 
 	<input type="hidden" value="1" name="assessment_id" id="assessmentIdOnModal">
 
-	<div class="form-floating">
-		<input type="text" class="form-control" autocomplete="off" placeholder="Token" value="{{ Str::upper(substr(Str::uuid(), -12)) }}" maxlength="24" name="token" id="tokenOnModal">
-		<label for="tokenOnModal">Token</label>
-	</div>
+	<div class="d-flex gap-2 flex-wrap align-items-center">
+		<div class="flex-basis-6">
+			<div class="form-floating">
+				<input type="text" class="form-control" autocomplete="off" placeholder="Token" value="{{ Str::upper(substr(Str::uuid(), -12)) }}" maxlength="24" name="token" id="tokenOnModal">
+				<label for="tokenOnModal">Token</label>
+			</div>
+		</div>
 
-	<div class="mb-2"></div>
-
-	<div class="form-floating">
-		<input type="text" class="form-control" autocomplete="off" placeholder="Nama Penilai" name="name" id="nameOnModal" required="">
-		<label for="nameOnModal">Nama Penilai</label>
+			<div class="flex-basis-6">
+			<div class="form-floating">
+				<input type="text" class="form-control" autocomplete="off" placeholder="Nama Penilai" name="name" id="nameOnModal" required="">
+				<label for="nameOnModal">Nama Penilai</label>
+			</div>
+		</div>
 	</div>
 
 	<div class="mb-2"></div>
 
 	<div class="form-select-floating">
-		<select name="projects[]" id="projects" class="form-select select2-single-modal" required="" data-bs-table="projects">
+		<select name="projects[]" id="projectsOnToken" class="form-select select2-single-modal" required="" data-bs-table="projects">
 			<option value="" selected="" disabled="">Pilih satu</option>
 			@foreach ($projects as $project)
 			<option value="{{ $project->id }}">{{ $project->project_number }} | {{ Str::upper($project->name ?? 'null') }}</option>
 			@endforeach
 		</select>
-		<label for="projects">No. PO</label>
+		<label for="projectsOnToken">No. PO</label>
+	</div>
+
+	<div class="mb-2"></div>
+
+	<div class="form-select-floating">
+		<select name="evaluatees[]" id="evaluateesOnToken" class="form-select select2-single-modal" required="" data-bs-table="evaluatees" data-bs-placeholder="Pilih [No. PO] terlebih dahulu" multiple=""></select>
+		<label for="evaluateesOnToken">Peserta</label>
 	</div>
 
 	{{--

@@ -19,6 +19,16 @@ const Toast = Swal.mixin({
   }
 });
 
+function padRight(inputString, padChar, desiredLength) {
+    const currentLength = inputString.length;
+    if (currentLength >= desiredLength) {
+        return inputString;
+    }
+
+    const padding = padChar.repeat(desiredLength - currentLength);
+    return inputString + padding;
+}
+
 function truncateText(text, maxLength) {
     if (text.length > maxLength) {
         return text.substring(0, maxLength) + '...';

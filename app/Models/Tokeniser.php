@@ -28,6 +28,10 @@ class Tokeniser extends Model
         return $this->belongsToMany(Department::class, 'pivot_departments_tokenisers')->orderBy('departments.name')->withPivot(['assessment_id']);
     }
 
+    public function evaluatees() {
+        return $this->belongsToMany(Evaluatee::class, 'pivot_evaluatees_tokenisers')->orderBy('evaluatees.name');
+    }
+
     public function evaluator() {
     	return $this->hasOne(Evaluator::class, 'token', 'token');
     }
